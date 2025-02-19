@@ -8,6 +8,7 @@ import Clases.DoublyCircular;
 import Clases.Video;
 import java.io.File;
 import java.time.Clock;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ListIterator;
 import javafx.event.ActionEvent;
@@ -45,16 +46,6 @@ public class VideoPlayer {
 
     DoublyCircular<Video> videoList = new DoublyCircular<>();
 
-    File archivo = new File("C:/Videos/ejemplo.mp4");
-    Media media = new Media(archivo.toURI().toString());
-
-    String nombreArchivo = archivo.getName();
-
-    System.out.println ("Nombre del archivo: " + nombreArchivo);
-
-    videoList.add(new Video());
-    
-    ListIterator<Video> listVideo = videoList.listIterator(0);
 
     private boolean isPlayed = false;
 
@@ -81,6 +72,26 @@ public class VideoPlayer {
     @FXML
     void selectMedia(ActionEvent event) {
 
+        File archivo0 = new File("C:\\Users\\judit\\Videos\\videoplayback.mp4");
+        Media player0 = new Media(archivo0.toURI().toString());
+        Video video0 = new Video(archivo0.getName(), player0, (int) player0.getDuration().toMillis(), LocalDateTime.now());
+        
+        File archivo1 = new File("C:\\Users\\judit\\Videos\\Seenojolimón.mp4");
+        Media player1 = new Media(archivo1.toURI().toString());
+        Video video1 = new Video(archivo1.getName(), player0, (int) player0.getDuration().toMillis(), LocalDateTime.now());
+        
+        
+        videoList.addLast(video0);
+         videoList.addLast(video1);
+        
+        
+        System.out.println(videoList);
+        
+        ListIterator<Video> listVideo = videoList.listIterator2();
+        System.out.println(listVideo);
+        
+       // ListIterator<Video> listVideo = videoList.listIterator(0);
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Media");
         File selectedFile = fileChooser.showOpenDialog(null);
@@ -90,11 +101,11 @@ public class VideoPlayer {
             // Video video = new Video(selectedFile.getName(), url,(int)slider.getValue(); //LocalTime.now(Clock.systemDefaultZone()));
             //videoList.add(video);
 
-            /*  if (currentNode == null) {
+            /* if (currentNode == null) {
                 currentNode = videoList.getHead();
                 loadMedia(currentNode.video.getPath());
             }
-        }*/
+        }
             mediaPlayer.currentTimeProperty().addListener(((observableValue, oldValue, newValue) -> {
                 slider.setValue(newValue.toSeconds());
                 lblDuration.setText("Duration: " + (int) slider.getValue() + " / " + (int) media.getDuration().toSeconds());
@@ -110,7 +121,7 @@ public class VideoPlayer {
             mediaView.fitWidthProperty().bind(scene.widthProperty());
             mediaView.fitHeightProperty().bind(scene.heightProperty());
 
-            mediaPlayer.setAutoPlay(true);
+            mediaPlayer.setAutoPlay(true);*/
 
         }
 
