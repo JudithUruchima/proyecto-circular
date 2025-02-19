@@ -28,7 +28,8 @@ import javafx.util.Duration;
  * @author judit
  */
 public class VideoPlayer {
-     @FXML
+
+    @FXML
     private Button btnPlay;
 
     @FXML
@@ -41,24 +42,29 @@ public class VideoPlayer {
 
     private Media media;
     private MediaPlayer mediaPlayer;
-    
+
     DoublyCircular<Video> videoList = new DoublyCircular<>();
-    
-   videoList.add(new Video());
+
+    File archivo = new File("C:/Videos/ejemplo.mp4");
+    Media media = new Media(archivo.toURI().toString());
+
+    String nombreArchivo = archivo.getName();
+
+    System.out.println ("Nombre del archivo: " + nombreArchivo);
+
+    videoList.add(new Video());
     
     ListIterator<Video> listVideo = videoList.listIterator(0);
-   
-    
 
     private boolean isPlayed = false;
 
     @FXML
     void btnPlay(MouseEvent event) {
-        if(!isPlayed){
+        if (!isPlayed) {
             btnPlay.setText("Pause");
             mediaPlayer.play();
             isPlayed = true;
-        }else {
+        } else {
             btnPlay.setText("Play");
             mediaPlayer.pause();
             isPlayed = false;
@@ -81,24 +87,23 @@ public class VideoPlayer {
 
         if (selectedFile != null) {
             String url = selectedFile.toURI().toString();
-           // Video video = new Video(selectedFile.getName(), url,(int)slider.getValue(); //LocalTime.now(Clock.systemDefaultZone()));
+            // Video video = new Video(selectedFile.getName(), url,(int)slider.getValue(); //LocalTime.now(Clock.systemDefaultZone()));
             //videoList.add(video);
 
-          /*  if (currentNode == null) {
+            /*  if (currentNode == null) {
                 currentNode = videoList.getHead();
                 loadMedia(currentNode.video.getPath());
             }
         }*/
-
             mediaPlayer.currentTimeProperty().addListener(((observableValue, oldValue, newValue) -> {
                 slider.setValue(newValue.toSeconds());
-                lblDuration.setText("Duration: " + (int)slider.getValue() + " / " + (int)media.getDuration().toSeconds());
+                lblDuration.setText("Duration: " + (int) slider.getValue() + " / " + (int) media.getDuration().toSeconds());
             }));
 
-            mediaPlayer.setOnReady(() ->{
+            mediaPlayer.setOnReady(() -> {
                 Duration totalDuration = media.getDuration();
                 slider.setMax(totalDuration.toSeconds());
-                lblDuration.setText("Duration: 00 / " + (int)media.getDuration().toSeconds());
+                lblDuration.setText("Duration: 00 / " + (int) media.getDuration().toSeconds());
             });
 
             Scene scene = mediaView.getScene();
@@ -112,7 +117,7 @@ public class VideoPlayer {
     }
 
     @FXML
-    private void sliderPressed(MouseEvent event){
+    private void sliderPressed(MouseEvent event) {
         mediaPlayer.seek(Duration.seconds(slider.getValue()));
     }
 

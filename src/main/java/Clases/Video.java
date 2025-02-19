@@ -5,24 +5,31 @@
 package Clases;
 
 import java.time.LocalDateTime;
+import javafx.scene.media.Media;
 
 /**
  *
  * @author judit
  */
 public class Video {
+
     private String nombre;
-    private String ruta;
+    private Media ruta;
     private int duracion;
     private LocalDateTime fechaAgregado;
     private boolean reproducido;
 
-    public Video(String nombre, String ruta, int duracion, LocalDateTime fechaAgregado) {
+    public Video(String nombre, Media ruta, int duracion, LocalDateTime fechaAgregado) {
         this.nombre = nombre;
         this.ruta = ruta;
         this.duracion = duracion;
         this.fechaAgregado = fechaAgregado;
         this.reproducido = false;
+    }
+
+    @Override
+    public String toString() {
+        return "Video{" + "nombre=" + nombre + ", ruta=" + ruta + ", duracion=" + duracion + ", fechaAgregado=" + fechaAgregado + ", reproducido=" + reproducido + '}';
     }
 
     public String getNombre() {
@@ -33,11 +40,11 @@ public class Video {
         this.nombre = nombre;
     }
 
-    public String getRuta() {
+    public Media getRuta() {
         return ruta;
     }
 
-    public void setRuta(String ruta) {
+    public void setRuta(Media ruta) {
         this.ruta = ruta;
     }
 
@@ -65,11 +72,4 @@ public class Video {
         this.reproducido = reproducido;
     }
 
-    @Override
-    public String toString() {
-        return "Video{" + "nombre=" + nombre + ", ruta=" + ruta + ", duracion=" + duracion + ", fechaAgregado=" + fechaAgregado + ", reproducido=" + reproducido + '}';
-    }
-    
-    
-    
 }
