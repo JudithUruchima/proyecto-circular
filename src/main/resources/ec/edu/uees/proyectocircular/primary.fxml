@@ -26,10 +26,12 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
+                  <Button fx:id="btnPrevious" mnemonicParsing="false" onMouseClicked="#btnPrevious" text="Previous" />
                   <Button mnemonicParsing="false" onAction="#selectMedia" text="Select Media" />
                   <Button fx:id="btnPlay" mnemonicParsing="false" onMouseClicked="#btnPlay" text="Play" />
                   <Button mnemonicParsing="false" onMouseClicked="#btnStop" text="Stop" />
                   <Label fx:id="lblDuration" text="Duration: 00 / 00" />
+                  <Button fx:id="btnNext" mnemonicParsing="false" onMouseClicked="#btnNext" text="Next" />
                </children>
             </HBox>
          </children>

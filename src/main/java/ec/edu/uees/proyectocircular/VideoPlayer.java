@@ -32,6 +32,12 @@ public class VideoPlayer {
 
     @FXML
     private Button btnPlay;
+     @FXML
+    private Button btnPrevious;
+
+      @FXML
+    private Button btnNext;
+
 
     @FXML
     private Label lblDuration;
@@ -70,6 +76,22 @@ public class VideoPlayer {
         mediaPlayer.stop();
         isPlayed = false;
     }
+    
+    @FXML
+    void btnPrevious(MouseEvent event) {
+        btnPrevious.setText("<-");
+        mediaPlayer.stop();
+        playPreviousVideo();
+        btnPrevious.setText("Previous");
+    }
+    
+    @FXML
+    void btnNext(MouseEvent event) {
+        btnNext.setText("->");
+        mediaPlayer.stop();
+        playNextVideo();
+    }
+    
 
     @FXML
     void selectMedia(ActionEvent event) {
@@ -168,6 +190,24 @@ public class VideoPlayer {
         }
 
         elementoActual = listVideo.next(); // Avanza al siguiente (o vuelve al inicio si es circular)
+        mediaActual = elementoActual.getRuta();
+        elementoActual.setReproducido(true);
+
+        mediaPlayer = new MediaPlayer(mediaActual);
+        mediaView.setMediaPlayer(mediaPlayer);
+
+        // Configurar que al finalizar pase al siguiente
+        mediaPlayer.setOnEndOfMedia(() -> playNextVideo());
+
+        mediaPlayer.play(); // Iniciar reproducción
+    }
+    
+    private void playPreviousVideo() {
+        if (!listVideo.hasPrevious()) {
+            listVideo = videoList.listIterator2(); // No es necesario si es circular
+        }
+
+        elementoActual = listVideo.previous(); // Avanza al siguiente (o vuelve al inicio si es circular)
         mediaActual = elementoActual.getRuta();
         elementoActual.setReproducido(true);
 
