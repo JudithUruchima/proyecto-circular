@@ -4,17 +4,24 @@
  */
 package ec.edu.uees.proyectocircular;
 
-import Clases.Enfermedad;
+import DBControlador.TurnoControlador;
+import modelo.Enfermedad;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
+import modelo.Turno;
 
 /**
  *
@@ -37,12 +44,19 @@ public class SolicitarTurnosVista implements Initializable {
     @FXML
     private ComboBox<Enfermedad> cbo5;
 
+    @FXML
+    private TextField txtapellido;
+
+    @FXML
+    private TextField txtnombre;
+
+    @FXML
+    private TextField txtcodigo;
 
     /* El siguiente proyecto deben realizarlo en grupos de 2 estudiantes.
 El proyecto consiste en realizar un sistema de atención de turnos por prioridad para un centro de salud. El paciente debe ingresar sus nombres y seleccionar la dolencia que tiene. Una vez que ingresa esta información será ingresado a la cola de prioridad. La dolencia establece la prioridad que tiene su atención. Estas dolencias deben estar con su prioridad en un archivo de texto plano.
 Para atender un paciente debe existir un botón que diga "Atención" y deberá mostrar los datos del paciente que debe ser atendido.
 El sistema debe mostrar entretenimiento continuo durante la espera de los pacientes para ello debe utilizar una lista doblemente enlazada circular que está reproduciendo continuamente videos. La interfaz gráfica debe ofrecer botones para ir al siguiente video, al previo, pausar y reanudar la reproducción del video. Los nombres de los archivos deben estar en texto plano.*/
-      
     ArrayList<Enfermedad> enfermedades1 = new ArrayList<>();
     ArrayList<Enfermedad> enfermedades2 = new ArrayList<>();
     ArrayList<Enfermedad> enfermedades3 = new ArrayList<>();
@@ -52,34 +66,39 @@ El sistema debe mostrar entretenimiento continuo durante la espera de los pacien
     public void aniadirEnfermedades() {
         //Priodidades basadas en el triaje de manchester
         //Prioridad 1 -> Emergencia
+        enfermedades1.add(null);
         enfermedades1.add(new Enfermedad("Paro cardiorrespiratorio o sospecha de infarto", 1));
         enfermedades1.add(new Enfermedad("Shock anafiláctico", 1));
         enfermedades1.add(new Enfermedad("Hemorragia masiva incontrolable", 1));
         enfermedades1.add(new Enfermedad("Accidente cerebrovascular en evolución", 1));
         enfermedades1.add(new Enfermedad("Quemaduras extensas y profundas", 1));
-        
+
         //Prioridad 2 -> Muy urgente 
+        enfermedades2.add(null);
         enfermedades2.add(new Enfermedad("Crisis asmática moderada", 2));
         enfermedades2.add(new Enfermedad("Alteración súbita del estado de conciencia", 2));
         enfermedades2.add(new Enfermedad("Vómitos persistentes con sangre", 2));
         enfermedades2.add(new Enfermedad("Fracturas expuestas o desplazadas", 2));
         enfermedades2.add(new Enfermedad("Dolor abdominal intenso y súbito", 2));
-        
+
         //Prioridad 3 -> Urgente
+        enfermedades3.add(null);
         enfermedades3.add(new Enfermedad("Dolor torácico leve sin signos de infarto", 3));
         enfermedades3.add(new Enfermedad("Crisis hipertensiva sin síntomas neurológicos", 3));
         enfermedades3.add(new Enfermedad("Vómitos y diarrea severos con signos de deshidratación", 3));
         enfermedades3.add(new Enfermedad("Cefalea intensa sin déficits neurológicos", 3));
         enfermedades3.add(new Enfermedad("Fiebre alta en niños sin convulsiones", 3));
 
-         //Prioridad 4 -> Poco Urgente
+        //Prioridad 4 -> Poco Urgente
+        enfermedades4.add(null);
         enfermedades4.add(new Enfermedad("Fiebre moderada sin signos de alarma", 4));
         enfermedades4.add(new Enfermedad("Dolor de garganta intenso sin dificultad para respirar", 4));
         enfermedades4.add(new Enfermedad("Dolor de oído moderado", 4));
         enfermedades4.add(new Enfermedad("Pequeñas heridas sin signos de infección", 4));
         enfermedades4.add(new Enfermedad("Síntomas leves de resfriado", 4));
-        
+
         //Prioridad 5 -> No Urgente
+        enfermedades5.add(null);
         enfermedades5.add(new Enfermedad("Resfriado común sin fiebre", 5));
         enfermedades5.add(new Enfermedad("Dolor muscular leve", 5));
         enfermedades5.add(new Enfermedad("Picaduras de insectos sin reacción alérgica grave", 5));
@@ -109,6 +128,95 @@ El sistema debe mostrar entretenimiento continuo durante la espera de los pacien
                 cbo5.setItems(lista5);
             });
         }).start();
+
+        agregarListeners(cbo1, cbo2, cbo3, cbo4, cbo5);
+        agregarListeners(cbo2, cbo1, cbo3, cbo4, cbo5);
+        agregarListeners(cbo3, cbo1, cbo2, cbo4, cbo5);
+        agregarListeners(cbo4, cbo1, cbo2, cbo3, cbo5);
+        agregarListeners(cbo5, cbo1, cbo2, cbo3, cbo4);
+        txtcodigo.setText(Integer.toString(turnoCtrl.generarCodigo()));
+    }
+
+    private ComboBox<Enfermedad> comboSeleccionado = null;
+
+    private void agregarListeners(ComboBox<Enfermedad> principal, ComboBox<Enfermedad>... otros) {
+        principal.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Enfermedad>() {
+            @Override
+            public void changed(ObservableValue<? extends Enfermedad> observable, Enfermedad oldValue, Enfermedad newValue) {
+                if (newValue != null) { // Se ha seleccionado algo
+                    comboSeleccionado = principal; // Guardar el ComboBox seleccionado
+                    System.out.println("Se ha seleccionado en: " + principal.getId());
+
+                    // Deshabilitar los otros ComboBox
+                    for (ComboBox<Enfermedad> combo : otros) {
+                        combo.setDisable(true);
+                    }
+                } else { // Si se borra la selección, volver a habilitar todos
+                    comboSeleccionado = null; // Ningún ComboBox está seleccionado
+                    for (ComboBox<Enfermedad> combo : otros) {
+                        combo.setDisable(false);
+                    }
+                }
+            }
+        });
+    }
+
+    TurnoControlador turnoCtrl = new TurnoControlador();
+
+    @FXML
+    void crearEdificio(ActionEvent event) {
+        try {
+            String nombre = txtnombre.getText();
+            String apellido = txtapellido.getText();
+
+            Enfermedad sintoma = getComboSeleccionado().getValue();
+            int prioridad = sintoma.getPrioridad();
+
+            Turno turno = new Turno(nombre, apellido, sintoma, prioridad);
+            txtcodigo.setText(Integer.toString(turno.getNumeroTicket()));
+
+            int result = turnoCtrl.Create(turno);
+
+            if (result > 0) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Registro de Turno");
+                alert.setHeaderText("Registro Agregado");
+                alert.setContentText("El registro ha sido agregado con éxito");
+                limpiarCampos();
+                alert.showAndWait();
+                
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Registro de Turno");
+                alert.setHeaderText("Error al registrar");
+                alert.setContentText("El registro no ha sido agregado");
+                alert.showAndWait();
+            }
+        } catch (Exception e) {
+            {
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setTitle("Error");
+                alerta.setHeaderText("Registro no creado");
+                alerta.setContentText("Por favor llene todos los campos");
+                alerta.showAndWait();
+            }
+        }
+    }
+
+    // Método para obtener el ComboBox seleccionado en otras partes del código
+    public ComboBox<Enfermedad> getComboSeleccionado() {
+        if (comboSeleccionado != null) {
+            return comboSeleccionado;
+        } else {
+            return null;
+        }
+    }
+
+    private void limpiarCampos() {
+        txtcodigo.setText(Integer.toString(turnoCtrl.generarCodigo()));
+        txtnombre.clear();
+        txtapellido.clear();
+        getComboSeleccionado().setValue(null); // Limpia el ComboBox
     }
 
 }

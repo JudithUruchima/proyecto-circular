@@ -4,8 +4,8 @@
  */
 package ec.edu.uees.proyectocircular;
 
-import Clases.DoublyCircular;
-import Clases.Video;
+import modelo.DoublyCircular;
+import modelo.Video;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -103,70 +103,6 @@ public class VideoPlayer implements Initializable {
         playNextVideo();
     }
 
-    /*public void selectMedia() {
-
-        File archivo0 = new File("C:\\Users\\judit\\Videos\\Seenojolimón.mp4");
-        Media player0 = new Media(archivo0.toURI().toString());
-        Video video0 = new Video("Se enojó limón", player0, (int) player0.getDuration().toMillis(), LocalDateTime.now());
-
-        File archivo1 = new File("C:\\Users\\judit\\Videos\\MECAIGOMELEVANTO.mp4");
-        Media player1 = new Media(archivo1.toURI().toString());
-        Video video1 = new Video("Me caigo, me levanto", player1, (int) player1.getDuration().toMillis(), LocalDateTime.now());
-
-        File archivo2 = new File("C:\\Users\\judit\\Videos\\victorlediceajoel.mp4");
-        Media player2 = new Media(archivo2.toURI().toString());
-        Video video2 = new Video("Conversación entre Victor y Joel", player2, (int) player2.getDuration().toMillis(), LocalDateTime.now());
-
-        File archivo3 = new File("C:\\Users\\judit\\Videos\\salsaypicante.mp4");
-        Media player3 = new Media(archivo3.toURI().toString());
-        Video video3 = new Video("Un video más mi gente", player3, (int) player3.getDuration().toMillis(), LocalDateTime.now());
-        File archivo4 = new File("C:\\Users\\judit\\Videos\\monodandovueltas.mp4");
-        Media player4 = new Media(archivo4.toURI().toString());
-        Video video4 = new Video("Mono dando vueltas", player4, (int) player4.getDuration().toMillis(), LocalDateTime.now());
-        File archivo5 = new File("C:\\Users\\judit\\Videos\\cancionamadre.mp4");
-        Media player5 = new Media(archivo5.toURI().toString());
-        Video video5 = new Video("Canción a la madre", player5, (int) player5.getDuration().toMillis(), LocalDateTime.now());
-        File archivo6 = new File("C:\\Users\\judit\\Videos\\perroexplota.mp4");
-        Media player6 = new Media(archivo6.toURI().toString());
-        Video video6 = new Video("Perro persigue una botella", player6, (int) player6.getDuration().toMillis(), LocalDateTime.now());
-
-        File archivo7 = new File("C:\\Users\\judit\\Videos\\Amor,ComprensionyTernura.mp4");
-        Media player7 = new Media(archivo7.toURI().toString());
-        Video video7 = new Video("Amor, Comprensión y Ternura", player7, (int) player7.getDuration().toMillis(), LocalDateTime.now());
-        videoList.addLast(video0);
-        videoList.addLast(video1);
-        videoList.addLast(video2);
-        videoList.addLast(video3);
-        videoList.addLast(video4);
-        videoList.addLast(video5);
-        videoList.addLast(video6);
-        videoList.addLast(video7);
-
-        System.out.println(videoList);
-
-        listVideo = videoList.listIterator2();
-        System.out.println(listVideo);
-
-        elementoActual = listVideo.next();
-
-        mediaActual = elementoActual.getRuta();
-
-        elementoActual.setReproducido(isPlayed);
-
-        mediaPlayer = new MediaPlayer(mediaActual);
-
-        mediaView.setMediaPlayer(mediaPlayer);
-
-        obtenerDuracion(mediaActual);
-        obtenerNombre(elementoActual);
-
-        Scene scene = mediaView.getScene();
-        mediaView.fitWidthProperty().bind(scene.widthProperty());
-        mediaView.fitHeightProperty().bind(scene.heightProperty());
-
-        playNextVideo();
-
-    }*/
     @FXML
     private void sliderPressed(MouseEvent event) {
         mediaPlayer.seek(Duration.seconds(slider.getValue()));
@@ -190,46 +126,6 @@ public class VideoPlayer implements Initializable {
 
     }
 
-    /*private void playNextVideo() {
-        if (!listVideo.hasNext()) {
-            listVideo = videoList.listIterator2(); // No es necesario si es circular
-        }
-
-        elementoActual = listVideo.next(); // Avanza al siguiente (o vuelve al inicio si es circular)
-        mediaActual = elementoActual.getRuta();
-        elementoActual.setReproducido(true);
-
-        mediaPlayer = new MediaPlayer(mediaActual);
-        mediaView.setMediaPlayer(mediaPlayer);
-        obtenerDuracion(mediaActual);
-        obtenerNombre(elementoActual);
-
-        // Configurar que al finalizar pase al siguiente
-        mediaPlayer.setOnEndOfMedia(() -> playNextVideo());
-
-        mediaPlayer.play(); // Iniciar reproducción
-    }
-
-    private void playPreviousVideo() {
-        if (!listVideo.hasPrevious()) {
-            listVideo = videoList.listIterator2(); // No es necesario si es circular
-        }
-
-        elementoActual = listVideo.previous(); // Avanza al siguiente (o vuelve al inicio si es circular)
-        mediaActual = elementoActual.getRuta();
-        elementoActual.setReproducido(true);
-
-        mediaPlayer = new MediaPlayer(mediaActual);
-        mediaView.setMediaPlayer(mediaPlayer);
-
-        obtenerDuracion(mediaActual);
-        obtenerNombre(elementoActual);
-        // Configurar que al finalizar pase al siguiente
-
-        mediaPlayer.setOnEndOfMedia(() -> playNextVideo());
-
-        mediaPlayer.play(); // Iniciar reproducción
-    }*/
     public void selectMedia() {
         if (!videoList.isEmpty()) {
             return; // Evita cargar los videos múltiples veces
@@ -300,7 +196,6 @@ public class VideoPlayer implements Initializable {
 
     }
 
-// Métodos actualizados para avanzar o retroceder de video
     private void playNextVideo() {
         if (!listVideo.hasNext()) {
             listVideo = videoList.listIterator2(); // Reiniciar iterador si es necesario
@@ -320,17 +215,23 @@ public class VideoPlayer implements Initializable {
         selectMedia();
     }
 
+    private static Stage secondaryStage = null; // Almacena la instancia de la ventana
+
     @FXML
     private void switchToSecondary() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("secondary.fxml"));
+        if (secondaryStage == null) { // Si no está abierta, la creamos
+            Parent root = FXMLLoader.load(getClass().getResource("secondary.fxml"));
 
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
+            secondaryStage = new Stage();
+            Scene scene = new Scene(root);
 
-        stage.setTitle("Solicitar Turnos");
-        stage.setScene(scene);
-        stage.show();
-
+            secondaryStage.setTitle("Solicitar Turnos");
+            secondaryStage.setScene(scene);
+            secondaryStage.setOnCloseRequest(event -> secondaryStage = null); // Cuando se cierra, restablecer variable
+            secondaryStage.show();
+        } else {
+            secondaryStage.toFront(); // Si ya está abierta, la trae al frente
+        }
     }
 
 }

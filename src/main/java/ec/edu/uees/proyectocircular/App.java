@@ -1,6 +1,6 @@
 package ec.edu.uees.proyectocircular;
 
-import Clases.DoublyCircular;
+import modelo.DoublyCircular;
 import java.io.File;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
