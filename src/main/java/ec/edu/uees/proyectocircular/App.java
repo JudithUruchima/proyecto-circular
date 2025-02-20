@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import static javafx.application.Application.launch;
+import javafx.application.Platform;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -31,6 +32,10 @@ public class App extends Application {
         stage.setTitle("Sistema de turnos médicos");
         stage.setScene(scene);
         stage.show();
+        VideoPlayer reproducir = new VideoPlayer();
+        
+     //   Platform.runLater(reproducir::selectMedia);
+    
     }
 
     public static void main(String[] args) {

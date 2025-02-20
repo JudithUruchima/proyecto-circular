@@ -82,7 +82,6 @@ public class VideoPlayer {
         btnPrevious.setText("<-");
         mediaPlayer.stop();
         playPreviousVideo();
-        btnPrevious.setText("Previous");
     }
     
     @FXML
@@ -93,14 +92,13 @@ public class VideoPlayer {
     }
     
 
-    @FXML
-    void selectMedia(ActionEvent event) {
+    public void selectMedia() {
 
         File archivo0 = new File("C:\\Users\\judit\\Videos\\Seenojolimón.mp4");
         Media player0 = new Media(archivo0.toURI().toString());
         Video video0 = new Video(archivo0.getName(), player0, (int) player0.getDuration().toMillis(), LocalDateTime.now());
 
-        File archivo1 = new File("C:\\Users\\judit\\Videos\\perroexplota.mp4");
+        File archivo1 = new File("C:\\Users\\judit\\Videos\\MECAIGOMELEVANTO.mp4");
         Media player1 = new Media(archivo1.toURI().toString());
         Video video1 = new Video(archivo1.getName(), player1, (int) player1.getDuration().toMillis(), LocalDateTime.now());
 
@@ -114,12 +112,24 @@ public class VideoPlayer {
         File archivo4 = new File("C:\\Users\\judit\\Videos\\monodandovueltas.mp4");
         Media player4 = new Media(archivo4.toURI().toString());
         Video video4 = new Video(archivo4.getName(), player4, (int) player4.getDuration().toMillis(), LocalDateTime.now());
+        File archivo5 = new File("C:\\Users\\judit\\Videos\\cancionamadre.mp4");
+        Media player5 = new Media(archivo5.toURI().toString());
+        Video video5 = new Video(archivo5.getName(), player5, (int) player5.getDuration().toMillis(), LocalDateTime.now());
+        File archivo6 = new File("C:\\Users\\judit\\Videos\\perroexplota.mp4");
+        Media player6 = new Media(archivo6.toURI().toString());
+        Video video6 = new Video(archivo6.getName(), player6, (int) player6.getDuration().toMillis(), LocalDateTime.now());
 
+        File archivo7 = new File("C:\\Users\\judit\\Videos\\Amor,ComprensionyTernura.mp4");
+        Media player7 = new Media(archivo7.toURI().toString());
+        Video video7 = new Video(archivo7.getName(), player7, (int) player7.getDuration().toMillis(), LocalDateTime.now());
         videoList.addLast(video0);
         videoList.addLast(video1);
         videoList.addLast(video2);
         videoList.addLast(video3);
         videoList.addLast(video4);
+        videoList.addLast(video5);
+        videoList.addLast(video6);
+        videoList.addLast(video7);
 
         System.out.println(videoList);
 
@@ -144,29 +154,10 @@ public class VideoPlayer {
         mediaView.fitHeightProperty().bind(scene.heightProperty());
 
         playNextVideo();
-        
-      //  mediaPlayer.setAutoPlay(false);
-        // Método para reproducir el siguiente vídeo
-    
-
-// Iniciar la reproducción con el primer vídeo
-    // ListIterator<Video> listVideo = videoList.listIterator(0);
-    /*FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Media");
-        File selectedFile = fileChooser.showOpenDialog(null);
-
-        //if (selectedFile != null) {
-        // String url = selectedFile.toURI().toString();
-        // Video video = new Video(selectedFile.getName(), url,(int)slider.getValue(); //LocalTime.now(Clock.systemDefaultZone()));
-        //videoList.add(video);
-
-        /*  if (currentNode == null) {
-                currentNode = videoList.getHead();
-                loadMedia(currentNode.video.getPath());
-            }
-        }*/
+  
     
     }
+    
     @FXML
     private void sliderPressed(MouseEvent event) {
         mediaPlayer.seek(Duration.seconds(slider.getValue()));
@@ -195,9 +186,11 @@ public class VideoPlayer {
 
         mediaPlayer = new MediaPlayer(mediaActual);
         mediaView.setMediaPlayer(mediaPlayer);
+         obtenerDuracion(mediaActual);
 
         // Configurar que al finalizar pase al siguiente
         mediaPlayer.setOnEndOfMedia(() -> playNextVideo());
+        
 
         mediaPlayer.play(); // Iniciar reproducción
     }
@@ -214,7 +207,9 @@ public class VideoPlayer {
         mediaPlayer = new MediaPlayer(mediaActual);
         mediaView.setMediaPlayer(mediaPlayer);
 
+         obtenerDuracion(mediaActual);
         // Configurar que al finalizar pase al siguiente
+        
         mediaPlayer.setOnEndOfMedia(() -> playNextVideo());
 
         mediaPlayer.play(); // Iniciar reproducción
