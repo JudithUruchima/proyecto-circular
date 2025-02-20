@@ -31,11 +31,10 @@ public class App extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Sistema de turnos médicos");
         stage.setScene(scene);
+
+        stage.setMaximized(true);  // Activa pantalla completa al iniciar
+        //stage.setFullScreenExitHint("");
         stage.show();
-        VideoPlayer reproducir = new VideoPlayer();
-        
-     //   Platform.runLater(reproducir::selectMedia);
-    
     }
 
     public static void main(String[] args) {

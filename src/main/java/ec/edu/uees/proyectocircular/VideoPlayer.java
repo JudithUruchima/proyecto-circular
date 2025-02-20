@@ -7,12 +7,18 @@ package ec.edu.uees.proyectocircular;
 import Clases.DoublyCircular;
 import Clases.Video;
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ListIterator;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,13 +28,14 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
  *
  * @author judit
  */
-public class VideoPlayer {
+public class VideoPlayer implements Initializable {
 
     @FXML
     private Button btnPlay;
@@ -37,6 +44,9 @@ public class VideoPlayer {
 
     @FXML
     private Button btnNext;
+
+    @FXML
+    private Button btnTurno;
 
     @FXML
     private Label nombreVideo;
@@ -157,7 +167,6 @@ public class VideoPlayer {
         playNextVideo();
 
     }*/
-
     @FXML
     private void sliderPressed(MouseEvent event) {
         mediaPlayer.seek(Duration.seconds(slider.getValue()));
@@ -221,7 +230,6 @@ public class VideoPlayer {
 
         mediaPlayer.play(); // Iniciar reproducción
     }*/
-
     public void selectMedia() {
         if (!videoList.isEmpty()) {
             return; // Evita cargar los videos múltiples veces
@@ -232,6 +240,7 @@ public class VideoPlayer {
         listVideo = videoList.listIterator2();
         elementoActual = listVideo.next();
         iniciarReproduccion(elementoActual);
+
     }
 
     private void cargarVideos() {
@@ -270,15 +279,25 @@ public class VideoPlayer {
 
         obtenerDuracion(mediaActual);
         obtenerNombre(video);
-        
+
         Scene scene = mediaView.getScene();
-        mediaView.fitWidthProperty().bind(scene.widthProperty());
-        mediaView.fitHeightProperty().bind(scene.heightProperty());
+        if (scene != null) { // Verifica que la escena no sea null
+            mediaView.fitWidthProperty().bind(scene.widthProperty());
+            mediaView.fitHeightProperty().bind(scene.heightProperty());
+        } else {
+            mediaPlayer.setOnReady(() -> { // Esperar a que el video esté listo
+                Scene readyScene = mediaView.getScene();
+                if (readyScene != null) {
+                    mediaView.fitWidthProperty().bind(readyScene.widthProperty());
+                    mediaView.fitHeightProperty().bind(readyScene.heightProperty());
+                }
+            });
+        }
 
         mediaPlayer.setOnEndOfMedia(() -> playNextVideo());
 
         mediaPlayer.play();
-       
+
     }
 
 // Métodos actualizados para avanzar o retroceder de video
@@ -294,6 +313,24 @@ public class VideoPlayer {
             listVideo = videoList.listIterator2(); // Reiniciar iterador si es necesario
         }
         iniciarReproduccion(listVideo.previous());
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        selectMedia();
+    }
+
+    @FXML
+    private void switchToSecondary() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("secondary.fxml"));
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+
+        stage.setTitle("Solicitar Turnos");
+        stage.setScene(scene);
+        stage.show();
+
     }
 
 }

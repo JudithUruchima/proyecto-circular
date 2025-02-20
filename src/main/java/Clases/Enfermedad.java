@@ -35,7 +35,7 @@ public class Enfermedad {
 
     @Override
     public String toString() {
-        return "Enfermedad{" + "nombre=" + nombre + ", prioridad=" + prioridad + '}';
+        return nombre;
     }
     
     

@@ -27,7 +27,6 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Button fx:id="btnPrevious" mnemonicParsing="false" onMouseClicked="#btnPrevious" text="Previous" />
-                  <Button mnemonicParsing="false" onAction="#selectMedia" text="Select Media" />
                   <Button fx:id="btnPlay" mnemonicParsing="false" onMouseClicked="#btnPlay" text="Play" />
                   <Button mnemonicParsing="false" onMouseClicked="#btnStop" text="Stop" />
                   <Button fx:id="btnNext" mnemonicParsing="false" onMouseClicked="#btnNext" text="Next" />
@@ -43,4 +42,11 @@
          </children>
       </VBox>
    </bottom>
+   <right>
+      <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="480.0" prefWidth="243.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnTurno" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToSecondary" text="Solicitar Turno" />
+         </children>
+      </VBox>
+   </right>
 </BorderPane>
