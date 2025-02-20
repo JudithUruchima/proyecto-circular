@@ -16,7 +16,7 @@
    <bottom>
       <VBox prefHeight="120.0" prefWidth="850.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="850.0">
+            <HBox alignment="CENTER" prefHeight="25.0" prefWidth="850.0">
                <children>
                   <Slider fx:id="slider" onMousePressed="#sliderPressed" HBox.hgrow="ALWAYS" />
                </children>
@@ -30,8 +30,14 @@
                   <Button mnemonicParsing="false" onAction="#selectMedia" text="Select Media" />
                   <Button fx:id="btnPlay" mnemonicParsing="false" onMouseClicked="#btnPlay" text="Play" />
                   <Button mnemonicParsing="false" onMouseClicked="#btnStop" text="Stop" />
-                  <Label fx:id="lblDuration" text="Duration: 00 / 00" />
                   <Button fx:id="btnNext" mnemonicParsing="false" onMouseClicked="#btnNext" text="Next" />
+                  <VBox alignment="CENTER" prefHeight="89.0" prefWidth="185.0">
+                     <children>
+                        <Label text="Se está reproduciendo:" />
+                        <Label fx:id="nombreVideo" text="...." />
+                        <Label fx:id="lblDuration" text="Duration: 00 / 00" />
+                     </children>
+                  </VBox>
                </children>
             </HBox>
          </children>

@@ -32,12 +32,14 @@ public class VideoPlayer {
 
     @FXML
     private Button btnPlay;
-     @FXML
+    @FXML
     private Button btnPrevious;
 
-      @FXML
+    @FXML
     private Button btnNext;
 
+    @FXML
+    private Label nombreVideo;
 
     @FXML
     private Label lblDuration;
@@ -53,7 +55,7 @@ public class VideoPlayer {
 
     DoublyCircular<Video> videoList = new DoublyCircular<>();
     ListIterator<Video> listVideo;
-     Video elementoActual;
+    Video elementoActual;
 
     private boolean isPlayed = false;
 
@@ -76,52 +78,51 @@ public class VideoPlayer {
         mediaPlayer.stop();
         isPlayed = false;
     }
-    
+
     @FXML
     void btnPrevious(MouseEvent event) {
         btnPrevious.setText("<-");
         mediaPlayer.stop();
         playPreviousVideo();
     }
-    
+
     @FXML
     void btnNext(MouseEvent event) {
         btnNext.setText("->");
         mediaPlayer.stop();
         playNextVideo();
     }
-    
 
-    public void selectMedia() {
+    /*public void selectMedia() {
 
         File archivo0 = new File("C:\\Users\\judit\\Videos\\Seenojolimón.mp4");
         Media player0 = new Media(archivo0.toURI().toString());
-        Video video0 = new Video(archivo0.getName(), player0, (int) player0.getDuration().toMillis(), LocalDateTime.now());
+        Video video0 = new Video("Se enojó limón", player0, (int) player0.getDuration().toMillis(), LocalDateTime.now());
 
         File archivo1 = new File("C:\\Users\\judit\\Videos\\MECAIGOMELEVANTO.mp4");
         Media player1 = new Media(archivo1.toURI().toString());
-        Video video1 = new Video(archivo1.getName(), player1, (int) player1.getDuration().toMillis(), LocalDateTime.now());
+        Video video1 = new Video("Me caigo, me levanto", player1, (int) player1.getDuration().toMillis(), LocalDateTime.now());
 
         File archivo2 = new File("C:\\Users\\judit\\Videos\\victorlediceajoel.mp4");
         Media player2 = new Media(archivo2.toURI().toString());
-        Video video2 = new Video(archivo2.getName(), player2, (int) player2.getDuration().toMillis(), LocalDateTime.now());
+        Video video2 = new Video("Conversación entre Victor y Joel", player2, (int) player2.getDuration().toMillis(), LocalDateTime.now());
 
         File archivo3 = new File("C:\\Users\\judit\\Videos\\salsaypicante.mp4");
         Media player3 = new Media(archivo3.toURI().toString());
-        Video video3 = new Video(archivo3.getName(), player3, (int) player3.getDuration().toMillis(), LocalDateTime.now());
+        Video video3 = new Video("Un video más mi gente", player3, (int) player3.getDuration().toMillis(), LocalDateTime.now());
         File archivo4 = new File("C:\\Users\\judit\\Videos\\monodandovueltas.mp4");
         Media player4 = new Media(archivo4.toURI().toString());
-        Video video4 = new Video(archivo4.getName(), player4, (int) player4.getDuration().toMillis(), LocalDateTime.now());
+        Video video4 = new Video("Mono dando vueltas", player4, (int) player4.getDuration().toMillis(), LocalDateTime.now());
         File archivo5 = new File("C:\\Users\\judit\\Videos\\cancionamadre.mp4");
         Media player5 = new Media(archivo5.toURI().toString());
-        Video video5 = new Video(archivo5.getName(), player5, (int) player5.getDuration().toMillis(), LocalDateTime.now());
+        Video video5 = new Video("Canción a la madre", player5, (int) player5.getDuration().toMillis(), LocalDateTime.now());
         File archivo6 = new File("C:\\Users\\judit\\Videos\\perroexplota.mp4");
         Media player6 = new Media(archivo6.toURI().toString());
-        Video video6 = new Video(archivo6.getName(), player6, (int) player6.getDuration().toMillis(), LocalDateTime.now());
+        Video video6 = new Video("Perro persigue una botella", player6, (int) player6.getDuration().toMillis(), LocalDateTime.now());
 
         File archivo7 = new File("C:\\Users\\judit\\Videos\\Amor,ComprensionyTernura.mp4");
         Media player7 = new Media(archivo7.toURI().toString());
-        Video video7 = new Video(archivo7.getName(), player7, (int) player7.getDuration().toMillis(), LocalDateTime.now());
+        Video video7 = new Video("Amor, Comprensión y Ternura", player7, (int) player7.getDuration().toMillis(), LocalDateTime.now());
         videoList.addLast(video0);
         videoList.addLast(video1);
         videoList.addLast(video2);
@@ -136,7 +137,6 @@ public class VideoPlayer {
         listVideo = videoList.listIterator2();
         System.out.println(listVideo);
 
-
         elementoActual = listVideo.next();
 
         mediaActual = elementoActual.getRuta();
@@ -148,16 +148,16 @@ public class VideoPlayer {
         mediaView.setMediaPlayer(mediaPlayer);
 
         obtenerDuracion(mediaActual);
+        obtenerNombre(elementoActual);
 
         Scene scene = mediaView.getScene();
         mediaView.fitWidthProperty().bind(scene.widthProperty());
         mediaView.fitHeightProperty().bind(scene.heightProperty());
 
         playNextVideo();
-  
-    
-    }
-    
+
+    }*/
+
     @FXML
     private void sliderPressed(MouseEvent event) {
         mediaPlayer.seek(Duration.seconds(slider.getValue()));
@@ -174,8 +174,14 @@ public class VideoPlayer {
             lblDuration.setText("Duration: 00 / " + (int) player.getDuration().toSeconds());
         });
     }
-    
-    private void playNextVideo() {
+
+    public void obtenerNombre(Video elemento) {
+
+        nombreVideo.setText(elemento.getNombre());
+
+    }
+
+    /*private void playNextVideo() {
         if (!listVideo.hasNext()) {
             listVideo = videoList.listIterator2(); // No es necesario si es circular
         }
@@ -186,15 +192,15 @@ public class VideoPlayer {
 
         mediaPlayer = new MediaPlayer(mediaActual);
         mediaView.setMediaPlayer(mediaPlayer);
-         obtenerDuracion(mediaActual);
+        obtenerDuracion(mediaActual);
+        obtenerNombre(elementoActual);
 
         // Configurar que al finalizar pase al siguiente
         mediaPlayer.setOnEndOfMedia(() -> playNextVideo());
-        
 
         mediaPlayer.play(); // Iniciar reproducción
     }
-    
+
     private void playPreviousVideo() {
         if (!listVideo.hasPrevious()) {
             listVideo = videoList.listIterator2(); // No es necesario si es circular
@@ -207,12 +213,87 @@ public class VideoPlayer {
         mediaPlayer = new MediaPlayer(mediaActual);
         mediaView.setMediaPlayer(mediaPlayer);
 
-         obtenerDuracion(mediaActual);
+        obtenerDuracion(mediaActual);
+        obtenerNombre(elementoActual);
         // Configurar que al finalizar pase al siguiente
-        
+
         mediaPlayer.setOnEndOfMedia(() -> playNextVideo());
 
         mediaPlayer.play(); // Iniciar reproducción
+    }*/
+
+    public void selectMedia() {
+        if (!videoList.isEmpty()) {
+            return; // Evita cargar los videos múltiples veces
+        }
+
+        cargarVideos(); // Nueva función para cargar solo una vez
+
+        listVideo = videoList.listIterator2();
+        elementoActual = listVideo.next();
+        iniciarReproduccion(elementoActual);
+    }
+
+    private void cargarVideos() {
+        String basePath = "C:\\Users\\judit\\Videos\\";
+        String[][] archivos = {
+            {"Seenojolimón.mp4", "Se enojó limón"},
+            {"MECAIGOMELEVANTO.mp4", "Me caigo, me levanto"},
+            {"victorlediceajoel.mp4", "Conversación entre Victor y Joel"},
+            {"salsaypicante.mp4", "Un video más mi gente"},
+            {"monodandovueltas.mp4", "Mono dando vueltas"},
+            {"cancionamadre.mp4", "Canción a la madre"},
+            {"perroexplota.mp4", "Perro persigue una botella"},
+            {"Amor,ComprensionyTernura.mp4", "Amor, Comprensión y Ternura"}
+        };
+
+        for (String[] archivo : archivos) {
+            File file = new File(basePath + archivo[0]);
+            if (file.exists()) {
+                Media media = new Media(file.toURI().toString());
+                Video video = new Video(archivo[1], media, (int) media.getDuration().toMillis(), LocalDateTime.now());
+                videoList.addLast(video);
+            }
+        }
+    }
+
+    private void iniciarReproduccion(Video video) {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.dispose(); // Libera el recurso anterior
+        }
+
+        mediaActual = video.getRuta();
+        video.setReproducido(true);
+        mediaPlayer = new MediaPlayer(mediaActual);
+        mediaView.setMediaPlayer(mediaPlayer);
+
+        obtenerDuracion(mediaActual);
+        obtenerNombre(video);
+        
+        Scene scene = mediaView.getScene();
+        mediaView.fitWidthProperty().bind(scene.widthProperty());
+        mediaView.fitHeightProperty().bind(scene.heightProperty());
+
+        mediaPlayer.setOnEndOfMedia(() -> playNextVideo());
+
+        mediaPlayer.play();
+       
+    }
+
+// Métodos actualizados para avanzar o retroceder de video
+    private void playNextVideo() {
+        if (!listVideo.hasNext()) {
+            listVideo = videoList.listIterator2(); // Reiniciar iterador si es necesario
+        }
+        iniciarReproduccion(listVideo.next());
+    }
+
+    private void playPreviousVideo() {
+        if (!listVideo.hasPrevious()) {
+            listVideo = videoList.listIterator2(); // Reiniciar iterador si es necesario
+        }
+        iniciarReproduccion(listVideo.previous());
     }
 
 }
