@@ -8,10 +8,10 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.uees.proyectocircular.SolicitarTurnosVista">
    <children>
       <ComboBox fx:id="cbo1" layoutX="53.0" layoutY="51.0" prefHeight="26.0" prefWidth="304.0" promptText="Escoja una enfermedad" />
-      <ComboBox fx:id="cbo2" layoutX="53.0" layoutY="116.0" prefHeight="26.0" prefWidth="304.0" />
-      <ComboBox fx:id="cbo3" layoutX="53.0" layoutY="191.0" prefHeight="26.0" prefWidth="304.0" />
-      <ComboBox fx:id="cbo4" layoutX="53.0" layoutY="269.0" prefHeight="26.0" prefWidth="304.0" />
-      <ComboBox fx:id="cbo5" layoutX="53.0" layoutY="345.0" prefHeight="26.0" prefWidth="304.0" />
+      <ComboBox fx:id="cbo2" layoutX="53.0" layoutY="116.0" prefHeight="26.0" prefWidth="304.0" promptText="Escoja una enfermedad" />
+      <ComboBox fx:id="cbo3" layoutX="53.0" layoutY="191.0" prefHeight="26.0" prefWidth="304.0" promptText="Escoja una enfermedad" />
+      <ComboBox fx:id="cbo4" layoutX="53.0" layoutY="269.0" prefHeight="26.0" prefWidth="304.0" promptText="Escoja una enfermedad" />
+      <ComboBox fx:id="cbo5" layoutX="53.0" layoutY="345.0" prefHeight="26.0" prefWidth="304.0" promptText="Escoja una enfermedad" />
       <TextField fx:id="txtnombre" layoutX="383.0" layoutY="116.0" prefHeight="26.0" prefWidth="188.0" promptText="Ingrese su nombre" />
       <TextField fx:id="txtapellido" layoutX="385.0" layoutY="181.0" prefHeight="26.0" prefWidth="188.0" promptText="Ingrese su apellido" />
       <TextField fx:id="txtcodigo" editable="false" layoutX="384.0" layoutY="51.0" prefHeight="26.0" prefWidth="188.0" promptText="Numero de ticket" />

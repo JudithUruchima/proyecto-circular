@@ -168,8 +168,27 @@ El sistema debe mostrar entretenimiento continuo durante la espera de los pacien
         try {
             String nombre = txtnombre.getText();
             String apellido = txtapellido.getText();
+            // Validaciones
+            if (nombre.isEmpty() || apellido.isEmpty()) {
+                mostrarAlerta(Alert.AlertType.WARNING, "Campos Vacíos", "Por favor, complete todos los campos.");
+                return;
+            }
+
+            if (!nombre.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{2,50}$")) {
+                mostrarAlerta(Alert.AlertType.WARNING, "Nombre Inválido", "El nombre solo puede contener letras y espacios (2-50 caracteres).");
+                return;
+            }
+
+            if (!apellido.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{2,50}$")) {
+                mostrarAlerta(Alert.AlertType.WARNING, "Apellido Inválido", "El apellido solo puede contener letras y espacios (2-50 caracteres).");
+                return;
+            }
 
             Enfermedad sintoma = getComboSeleccionado().getValue();
+            if (sintoma == null) {
+                mostrarAlerta(Alert.AlertType.WARNING, "Selección Inválida", "Debe seleccionar un síntoma.");
+                return;
+            }
             int prioridad = sintoma.getPrioridad();
 
             Turno turno = new Turno(nombre, apellido, sintoma, prioridad);
@@ -178,29 +197,24 @@ El sistema debe mostrar entretenimiento continuo durante la espera de los pacien
             int result = turnoCtrl.Create(turno);
 
             if (result > 0) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Registro de Turno");
-                alert.setHeaderText("Registro Agregado");
-                alert.setContentText("El registro ha sido agregado con éxito");
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Registro Exitoso", "El registro ha sido agregado con éxito.");
                 limpiarCampos();
-                alert.showAndWait();
-                
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Registro de Turno");
-                alert.setHeaderText("Error al registrar");
-                alert.setContentText("El registro no ha sido agregado");
-                alert.showAndWait();
+                mostrarAlerta(Alert.AlertType.ERROR, "Error en Registro", "No se pudo agregar el registro.");
             }
+
         } catch (Exception e) {
-            {
-                Alert alerta = new Alert(Alert.AlertType.ERROR);
-                alerta.setTitle("Error");
-                alerta.setHeaderText("Registro no creado");
-                alerta.setContentText("Por favor llene todos los campos");
-                alerta.showAndWait();
-            }
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ocurrió un error. Por favor, revise los datos ingresados.");
         }
+
+    }
+
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 
     // Método para obtener el ComboBox seleccionado en otras partes del código

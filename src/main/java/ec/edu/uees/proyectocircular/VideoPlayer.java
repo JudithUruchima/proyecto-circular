@@ -176,7 +176,7 @@ public class VideoPlayer implements Initializable {
         obtenerDuracion(mediaActual);
         obtenerNombre(video);
 
-        Scene scene = mediaView.getScene();
+        /*Scene scene = mediaView.getScene();
         if (scene != null) { // Verifica que la escena no sea null
             mediaView.fitWidthProperty().bind(scene.widthProperty());
             mediaView.fitHeightProperty().bind(scene.heightProperty());
@@ -188,6 +188,23 @@ public class VideoPlayer implements Initializable {
                     mediaView.fitHeightProperty().bind(readyScene.heightProperty());
                 }
             });
+        }*/
+        Scene scene = mediaView.getScene();
+        mediaView.setPreserveRatio(true); // Mantener la relación de aspecto del video
+
+        if (scene != null) {
+            mediaView.fitWidthProperty().bind(scene.widthProperty().multiply(0.8));  // Ajustar al 80% del ancho de la ventana
+            mediaView.fitHeightProperty().bind(scene.heightProperty().multiply(0.8)); // Ajustar al 80% del alto de la ventana
+            
+        } else {
+            mediaPlayer.setOnReady(() -> {
+                Scene readyScene = mediaView.getScene();
+                if (readyScene != null) {
+                    mediaView.fitWidthProperty().bind(readyScene.widthProperty().multiply(0.8));
+                    mediaView.fitHeightProperty().bind(readyScene.heightProperty().multiply(0.8));
+                }
+            });
+
         }
 
         mediaPlayer.setOnEndOfMedia(() -> playNextVideo());

@@ -90,7 +90,7 @@ public class TurnoControlador {
                 String apellido = resultSet.getString("direccion");
                 String sintoma = resultSet.getString("sintoma");
                 int prioridad = resultSet.getInt("prioridad");
-                
+
                 Enfermedad enfermedad = new Enfermedad(sintoma, prioridad);
 
                 turnos.add(new Turno(codigo, nombre, apellido, enfermedad, prioridad));
