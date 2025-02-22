@@ -14,11 +14,6 @@
    <bottom>
       <VBox prefHeight="120.0" prefWidth="850.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="25.0" prefWidth="850.0">
-               <padding>
-                  <Insets left="15.0" right="15.0" />
-               </padding>
-            </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Button fx:id="btnPrevious" mnemonicParsing="false" onMouseClicked="#btnPrevious" text="Previous" />
@@ -32,6 +27,7 @@
                         <Label fx:id="lblDuration" text="Duration: 00 / 00" />
                      </children>
                   </VBox>
+                  <HBox prefHeight="100.0" prefWidth="179.0" />
                </children>
             </HBox>
          </children>
@@ -40,7 +36,15 @@
    <right>
       <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="480.0" prefWidth="243.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnTurno" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToSecondary" text="Solicitar Turno" />
+            <Button fx:id="btnTurno" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToSecondary" text="Solicitar Turno">
+               <VBox.margin>
+                  <Insets bottom="40.0" />
+               </VBox.margin></Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToTertiary" text="Atención">
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
    </right>

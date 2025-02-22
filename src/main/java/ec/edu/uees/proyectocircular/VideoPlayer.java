@@ -251,4 +251,22 @@ public class VideoPlayer implements Initializable {
         }
     }
 
+    private static Stage tertiaryStage = null; // Almacena la instancia de la ventana
+
+    @FXML
+    private void switchToTertiary() throws IOException {
+        if (tertiaryStage == null) { // Si no está abierta, la creamos
+            Parent root = FXMLLoader.load(getClass().getResource("tertiary.fxml"));
+
+            tertiaryStage = new Stage();
+            Scene scene = new Scene(root);
+
+            tertiaryStage.setTitle("Solicitar Turnos");
+            tertiaryStage.setScene(scene);
+            tertiaryStage.setOnCloseRequest(event -> tertiaryStage = null); // Cuando se cierra, restablecer variable
+            tertiaryStage.show();
+        } else {
+            tertiaryStage.toFront(); // Si ya está abierta, la trae al frente
+        }
+    }
 }

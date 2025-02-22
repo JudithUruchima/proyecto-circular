@@ -190,8 +190,9 @@ El sistema debe mostrar entretenimiento continuo durante la espera de los pacien
                 return;
             }
             int prioridad = sintoma.getPrioridad();
+            Boolean atendido = false;
 
-            Turno turno = new Turno(nombre, apellido, sintoma, prioridad);
+            Turno turno = new Turno(nombre, apellido, sintoma, prioridad, atendido);
             txtcodigo.setText(Integer.toString(turno.getNumeroTicket()));
 
             int result = turnoCtrl.Create(turno);

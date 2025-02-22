@@ -11,34 +11,40 @@ import DBControlador.TurnoControlador;
  * @author judit
  */
 public class Turno {
+
     private int numeroTicket;
     private String nombre;
     private String apellido;
-    private Enfermedad sintoma; 
-    private int prioridad; 
-    
-   TurnoControlador coneccion = new TurnoControlador();
-    
-    public Turno(String nombre, String apellido, Enfermedad sintoma, int prioridad) {
-        this.numeroTicket = coneccion.generarCodigo();
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.sintoma = sintoma;
-        this.prioridad = prioridad;
-    }
-    
-    public Turno(int numeroTicket, String nombre, String apellido, Enfermedad sintoma, int prioridad) {
+    private Enfermedad sintoma;
+    private int prioridad;
+    private Boolean atendido;
+    private long timestamp; 
+
+    private TurnoControlador coneccion = new TurnoControlador();
+
+    public Turno(int numeroTicket, String nombre, String apellido, Enfermedad sintoma, int prioridad, Boolean atendido) {
         this.numeroTicket = numeroTicket;
         this.nombre = nombre;
         this.apellido = apellido;
         this.sintoma = sintoma;
         this.prioridad = prioridad;
+        this.atendido = atendido;
+       // this.timestamp = System.currentTimeMillis();
+    }
+
+    public Turno(String nombre, String apellido, Enfermedad sintoma, int prioridad, Boolean atendido) {
+        this.numeroTicket = coneccion.generarCodigo();
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.sintoma = sintoma;
+        this.prioridad = prioridad;
+        this.atendido = atendido;
+        this.timestamp = System.currentTimeMillis();
     }
 
     public int getNumeroTicket() {
         return numeroTicket;
     }
-
 
     public String getNombre() {
         return nombre;
@@ -72,6 +78,21 @@ public class Turno {
         this.prioridad = prioridad;
     }
 
+    public Boolean getAtendido() {
+        return atendido;
+    }
+
+    public void setAtendido(Boolean atendido) {
+        this.atendido = atendido;
+    }
     
-    
+     public long getTimestamp() {
+        return timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return nombre + " " + apellido + ", Síntoma: " + sintoma;
+    }
+
 }
