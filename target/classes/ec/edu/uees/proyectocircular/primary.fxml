@@ -11,30 +11,8 @@
 <?import javafx.scene.media.MediaView?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.uees.proyectocircular.VideoPlayer">
-   <bottom>
-      <VBox prefHeight="120.0" prefWidth="850.0" BorderPane.alignment="CENTER">
-         <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-               <children>
-                  <Button fx:id="btnPrevious" mnemonicParsing="false" onMouseClicked="#btnPrevious" text="Previous" />
-                  <Button fx:id="btnPlay" mnemonicParsing="false" onMouseClicked="#btnPlay" text="| |" />
-                  <Button mnemonicParsing="false" onMouseClicked="#btnStop" text="Stop" />
-                  <Button fx:id="btnNext" mnemonicParsing="false" onMouseClicked="#btnNext" text="Next" />
-                  <VBox alignment="CENTER" prefHeight="89.0" prefWidth="185.0">
-                     <children>
-                        <Label text="Se está reproduciendo:" />
-                        <Label fx:id="nombreVideo" text="...." />
-                        <Label fx:id="lblDuration" text="Duration: 00 / 00" />
-                     </children>
-                  </VBox>
-                  <HBox prefHeight="100.0" prefWidth="179.0" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-   </bottom>
    <right>
-      <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="480.0" prefWidth="520.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="600.0" prefWidth="430.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnTurno" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToSecondary" text="Solicitar Turno">
                <VBox.margin>
@@ -51,12 +29,31 @@
    <center>
       <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="487.0" BorderPane.alignment="CENTER">
          <children>
-            <MediaView fx:id="mediaView" fitHeight="200.0" fitWidth="200.0">
-               <viewport>
-                  <Rectangle2D />
-               </viewport>
-            </MediaView>
-            <Slider fx:id="slider" onMousePressed="#sliderPressed" />
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <MediaView fx:id="mediaView" fitHeight="200.0" fitWidth="200.0" onMouseClicked="#btnPlay" VBox.vgrow="ALWAYS">
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                  </MediaView>
+               </children>
+            </VBox>
+            <Slider fx:id="slider" onMousePressed="#sliderPressed" VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Button fx:id="btnPrevious" mnemonicParsing="false" onMouseClicked="#btnPrevious" text="&lt;-" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="btnPlay" mnemonicParsing="false" onMouseClicked="#btnPlay" text="| |" HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onMouseClicked="#btnStop" text="Stop" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="btnNext" mnemonicParsing="false" onMouseClicked="#btnNext" text="-&gt;" HBox.hgrow="ALWAYS" />
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="288.0">
+                     <children>
+                        <Label text="Se está reproduciendo:" />
+                        <Label fx:id="nombreVideo" text="...." />
+                        <Label fx:id="lblDuration" text="Duration: 00 / 00" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </center>

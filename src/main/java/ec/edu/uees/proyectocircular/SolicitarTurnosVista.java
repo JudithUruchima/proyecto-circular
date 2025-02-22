@@ -108,8 +108,8 @@ El sistema debe mostrar entretenimiento continuo durante la espera de los pacien
         enfermedades5.add(new Enfermedad("Ansiedad o crisis emocional sin riesgo inmediato", 5));
         enfermedades5.add(new Enfermedad("Molestias gastrointestinales leves (gases, reflujo)", 5));
 */
-        // String filePath = "C:\\Users\\judit\\Documents\\NetBeansProjects\\proyectoCircular\\src\\main\\java\\ec\\edu\\uees\\proyectocircular\\dolencias.txt";
-        String filePath = getClass().getResource("/ec/edu/uees/proyectocircular/dolencias.txt").getPath();
+        String filePath = "C:\\Users\\judit\\Documents\\NetBeansProjects\\proyectoCircular\\src\\main\\java\\ec\\edu\\uees\\proyectocircular\\dolencias.txt";
+        //String filePath = getClass().getResource("/ec/edu/uees/proyectocircular/dolencias.txt").getPath();
 
          //Dolencias nulas para que tenga la oportunidad de cambiar su dolencia en el cbobox
          enfermedades1.add(null);

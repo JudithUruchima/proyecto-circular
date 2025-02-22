@@ -4,11 +4,16 @@
  */
 package ec.edu.uees.proyectocircular;
 
+import java.io.BufferedReader;
 import modelo.DoublyCircular;
 import modelo.Video;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -121,12 +126,12 @@ public class VideoPlayer implements Initializable {
     public void obtenerDuracion(Media player) {
         mediaPlayer.currentTimeProperty().addListener(((observableValue, oldValue, newValue) -> {
             slider.setValue(newValue.toSeconds());
-            lblDuration.setText("Duration: " + (int) slider.getValue() + " / " + (int) player.getDuration().toSeconds());
+            lblDuration.setText("Duración: " + (int) slider.getValue() + " / " + (int) player.getDuration().toSeconds());
         }));
         mediaPlayer.setOnReady(() -> {
             Duration totalDuration = player.getDuration();
             slider.setMax(totalDuration.toSeconds());
-            lblDuration.setText("Duration: 00 / " + (int) player.getDuration().toSeconds());
+            lblDuration.setText("Duración: 0 / " + (int) player.getDuration().toSeconds());
         });
     }
 
@@ -138,10 +143,10 @@ public class VideoPlayer implements Initializable {
 
     public void selectMedia() {
         if (!videoList.isEmpty()) {
-            return; // Evita cargar los videos múltiples veces
+            return;
         }
 
-        cargarVideos(); // Nueva función para cargar solo una vez
+        cargarVideos();
 
         listVideo = videoList.listIterator2();
         elementoActual = listVideo.next();
@@ -150,26 +155,38 @@ public class VideoPlayer implements Initializable {
     }
 
     private void cargarVideos() {
-        
-        String basePath = "C:\\Users\\judit\\Videos\\";
-        String[][] archivos = {
-            {"Seenojolimón.mp4", "Se enojó limón"},
-            {"MECAIGOMELEVANTO.mp4", "Me caigo, me levanto"},
-            {"victorlediceajoel.mp4", "Conversación entre Victor y Joel"},
-            {"salsaypicante.mp4", "Un video más mi gente"},
-            {"monodandovueltas.mp4", "Mono dando vueltas"},
-            {"cancionamadre.mp4", "Canción a la madre"},
-            {"perroexplota.mp4", "Perro persigue una botella"},
-            {"Amor,ComprensionyTernura.mp4", "Amor, Comprensión y Ternura"}
-        };
+        Path filePath = Paths.get("C:\\Users\\judit\\Documents\\NetBeansProjects\\proyectoCircular\\src\\main\\java\\ec\\edu\\uees\\proyectocircular\\videos.txt");
 
-        for (String[] archivo : archivos) {
-            File file = new File(basePath + archivo[0]);
-            if (file.exists()) {
-                Media media = new Media(file.toURI().toString());
-                Video video = new Video(archivo[1], media, (int) media.getDuration().toMillis(), LocalDateTime.now());
-                videoList.addLast(video);
+        if (!Files.exists(filePath)) {
+            System.out.println("Archivo videos.txt no encontrado en: " + filePath.toAbsolutePath());
+            return;
+        }
+
+        String basePath = "C:\\Users\\judit\\Videos\\"; // Ruta base de los videos
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath.toFile()))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",", 2); // Separar por la primera coma
+                if (partes.length < 2) {
+                    System.out.println("Línea inválida en videos.txt: " + linea);
+                    continue;
+                }
+
+                String nombreArchivo = partes[0].trim();
+                String titulo = partes[1].trim();
+
+                File file = new File(basePath + nombreArchivo);
+                if (file.exists()) {
+                    Media media = new Media(file.toURI().toString());
+                    Video video = new Video(titulo, media, (int) media.getDuration().toMillis(), LocalDateTime.now());
+                    videoList.addLast(video);
+                } else {
+                    System.out.println("Archivo de video no encontrado: " + nombreArchivo);
+                }
             }
+        } catch (IOException e) {
+            System.out.println("Error al leer videos.txt: " + e.getMessage());
         }
     }
 
@@ -191,24 +208,22 @@ public class VideoPlayer implements Initializable {
         mediaView.setPreserveRatio(true); // Mantener la relación de aspecto del video
 
         if (scene != null) {
-            mediaView.fitWidthProperty().bind(scene.widthProperty().multiply(0.8));  // Ajustar al 80% del ancho de la ventana
-            mediaView.fitHeightProperty().bind(scene.heightProperty().multiply(0.8)); // Ajustar al 80% del alto de la ventana
+            mediaView.fitWidthProperty().bind(scene.widthProperty().multiply(0.9));  // Ajustar al 80% del ancho de la ventana
+            mediaView.fitHeightProperty().bind(scene.heightProperty().multiply(0.7)); // Ajustar al 80% del alto de la ventana
 
         } else {
             mediaPlayer.setOnReady(() -> {
                 Scene readyScene = mediaView.getScene();
                 if (readyScene != null) {
-                    mediaView.fitWidthProperty().bind(readyScene.widthProperty().multiply(0.8));
-                    mediaView.fitHeightProperty().bind(readyScene.heightProperty().multiply(0.8));
+                    mediaView.fitWidthProperty().bind(readyScene.widthProperty().multiply(0.9));
+                    mediaView.fitHeightProperty().bind(readyScene.heightProperty().multiply(0.7));
                 }
             });
 
         }
-
         mediaPlayer.setOnEndOfMedia(() -> playNextVideo());
 
         mediaPlayer.play();
-
     }
 
     private void playNextVideo() {
@@ -235,7 +250,17 @@ public class VideoPlayer implements Initializable {
                 if (mediaPlayer != null) {
                     mediaPlayer.pause(); // Pausar el video si la ventana se cierra
                 }
+
+                if (secondaryStage != null && secondaryStage.isShowing()) {
+                    secondaryStage.close();
+                }
+
+                if (tertiaryStage != null && tertiaryStage.isShowing()) {
+                    tertiaryStage.close();
+                }
+
             });
+
         });
     }
 
