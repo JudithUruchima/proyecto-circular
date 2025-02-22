@@ -74,6 +74,7 @@ public class VideoPlayer implements Initializable {
     DoublyCircular<Video> videoList = new DoublyCircular<>();
     ListIterator<Video> listVideo;
     Video elementoActual;
+    private boolean previousPressed = false;
 
     private boolean isPlayed = true;
 
@@ -124,14 +125,55 @@ public class VideoPlayer implements Initializable {
     }
 
     public void obtenerDuracion(Media player) {
-        mediaPlayer.currentTimeProperty().addListener(((observableValue, oldValue, newValue) -> {
+        /* mediaPlayer.currentTimeProperty().addListener(((observableValue, oldValue, newValue) -> {
             slider.setValue(newValue.toSeconds());
             lblDuration.setText("Duración: " + (int) slider.getValue() + " / " + (int) player.getDuration().toSeconds());
         }));
         mediaPlayer.setOnReady(() -> {
             Duration totalDuration = player.getDuration();
-            slider.setMax(totalDuration.toSeconds());
+           // slider.setMax(totalDuration.toSeconds());
             lblDuration.setText("Duración: 0 / " + (int) player.getDuration().toSeconds());
+        });*/
+ /*mediaPlayer.currentTimeProperty().addListener((observableValue, oldValue, newValue) -> {
+            double seconds = newValue.toSeconds();
+            slider.setValue(seconds);
+            Duration totalDuration = player.getDuration();
+            if (totalDuration != null && !totalDuration.equals(Duration.UNKNOWN) && totalDuration.toSeconds() > 0) {
+                lblDuration.setText("Duración: " + (int) seconds + " / " + (int) totalDuration.toSeconds());
+            } else {
+                lblDuration.setText("Duración: " + (int) seconds + " / 0");
+            }
+        });
+
+        mediaPlayer.setOnReady(() -> {
+            Duration totalDuration = player.getDuration();
+            if (totalDuration != null && !totalDuration.equals(Duration.UNKNOWN) && totalDuration.toSeconds() > 0) {
+                slider.setMax(totalDuration.toSeconds());
+            } else {
+                System.out.println("Duración no válida: " + totalDuration);
+            }
+            lblDuration.setText("Duración: 0 / " + (int) totalDuration.toSeconds());
+        });
+         */
+        mediaPlayer.currentTimeProperty().addListener((observableValue, oldValue, newValue) -> {
+            double seconds = newValue.toSeconds();
+            slider.setValue(seconds);
+            Duration totalDuration = player.getDuration();
+            if (totalDuration != null && !totalDuration.equals(Duration.UNKNOWN) && totalDuration.toSeconds() > 0) {
+                lblDuration.setText("Duración: " + (int) seconds + " / " + (int) totalDuration.toSeconds());
+            } else {
+                lblDuration.setText("Duración: " + (int) seconds + " / 0");
+            }
+        });
+
+        mediaPlayer.setOnReady(() -> {
+            Duration totalDuration = player.getDuration();
+            if (totalDuration != null && !totalDuration.equals(Duration.UNKNOWN) && totalDuration.toSeconds() > 0) {
+                slider.setMax(totalDuration.toSeconds());
+            } else {
+                System.out.println("Duración no válida: " + totalDuration);
+            }
+            lblDuration.setText("Duración: 0 / " + (int) totalDuration.toSeconds());
         });
     }
 
@@ -226,19 +268,55 @@ public class VideoPlayer implements Initializable {
         mediaPlayer.play();
     }
 
-    private void playNextVideo() {
-        if (!listVideo.hasNext()) {
+    /*private void playNextVideo() {
+         /*if (!listVideo.hasNext()) {
             listVideo = videoList.listIterator2(); // Reiniciar iterador si es necesario
         }
-        iniciarReproduccion(listVideo.next());
+       iniciarReproduccion(listVideo.next());
+        if (elementoActual != null) {
+            elementoActual = listVideo.next(); // En una lista circular, el siguiente después del último es el primero automáticamente
+            iniciarReproduccion(elementoActual);
+        }
     }
 
     private void playPreviousVideo() {
-        if (!listVideo.hasPrevious()) {
+        /*if (!listVideo.hasPrevious()) {
             listVideo = videoList.listIterator2(); // Reiniciar iterador si es necesario
+        
+       // iniciarReproduccion(listVideo.previous());
+        if (elementoActual != null) {
+            // Si no hay elemento anterior, reposiciona el iterador al final de la lista
+            if (!listVideo.hasPrevious()) {
+                listVideo = videoList.listIterator2();
+                // Recorre la lista para situarte en el último elemento
+                while (listVideo.hasNext()) {
+                    listVideo.next();
+                }
+            }
+            elementoActual = listVideo.previous();
+            iniciarReproduccion(elementoActual);
         }
-        iniciarReproduccion(listVideo.previous());
+    }*/
+
+    private void playNextVideo() {
+    if (!videoList.isEmpty()) {
+        // Si se presionó previous justo antes, cancela ese movimiento
+        if (previousPressed) {
+            listVideo.next(); // Avanza una posición adicional
+            previousPressed = false;
+        }
+        elementoActual = listVideo.next();
+        iniciarReproduccion(elementoActual);
     }
+}
+
+private void playPreviousVideo() {
+    if (!videoList.isEmpty()) {
+        elementoActual = listVideo.previous();
+        iniciarReproduccion(elementoActual);
+        previousPressed = true;
+    }
+}
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
