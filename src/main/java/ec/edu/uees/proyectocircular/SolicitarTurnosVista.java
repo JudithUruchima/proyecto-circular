@@ -5,6 +5,9 @@
 package ec.edu.uees.proyectocircular;
 
 import DBControlador.TurnoControlador;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import modelo.Enfermedad;
 import java.net.URL;
 import java.util.ArrayList;
@@ -66,7 +69,7 @@ El sistema debe mostrar entretenimiento continuo durante la espera de los pacien
     public void aniadirEnfermedades() {
         //Priodidades basadas en el triaje de manchester
         //Prioridad 1 -> Emergencia
-        enfermedades1.add(null);
+        /*enfermedades1.add(null);
         enfermedades1.add(new Enfermedad("Paro cardiorrespiratorio o sospecha de infarto", 1));
         enfermedades1.add(new Enfermedad("Shock anafiláctico", 1));
         enfermedades1.add(new Enfermedad("Hemorragia masiva incontrolable", 1));
@@ -104,7 +107,52 @@ El sistema debe mostrar entretenimiento continuo durante la espera de los pacien
         enfermedades5.add(new Enfermedad("Picaduras de insectos sin reacción alérgica grave", 5));
         enfermedades5.add(new Enfermedad("Ansiedad o crisis emocional sin riesgo inmediato", 5));
         enfermedades5.add(new Enfermedad("Molestias gastrointestinales leves (gases, reflujo)", 5));
+*/
+        // String filePath = "C:\\Users\\judit\\Documents\\NetBeansProjects\\proyectoCircular\\src\\main\\java\\ec\\edu\\uees\\proyectocircular\\dolencias.txt";
+        String filePath = getClass().getResource("/ec/edu/uees/proyectocircular/dolencias.txt").getPath();
 
+         //Dolencias nulas para que tenga la oportunidad de cambiar su dolencia en el cbobox
+         enfermedades1.add(null);
+         enfermedades2.add(null);
+         enfermedades3.add(null);
+         enfermedades4.add(null);
+         enfermedades5.add(null);
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String linea;
+            while ((linea = br.readLine()) != null) { // Leer línea por línea
+                String[] partes = linea.split(","); // Separar por coma
+                if (partes.length == 2) { 
+                    String nombre = partes[0].trim(); // Nombre de la enfermedad
+                    int prioridad = Integer.parseInt(partes[1].trim()); // Prioridad
+
+                    Enfermedad enfermedad = new Enfermedad(nombre, prioridad);
+                    
+                    // Agregar la enfermedad a la lista según su prioridad
+                    switch (prioridad) {
+                        case 1: 
+                            enfermedades1.add(enfermedad);
+                            break;
+                        case 2: 
+                            enfermedades2.add(enfermedad);
+                            break;
+                        case 3: 
+                            enfermedades3.add(enfermedad);
+                            break;
+                        case 4: 
+                            enfermedades4.add(enfermedad);
+                            break;
+                        case 5: 
+                            enfermedades5.add(enfermedad);
+                            break;
+                        default:
+                            System.out.println("Prioridad inválida en: " + linea);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+        }
     }
 
     @Override

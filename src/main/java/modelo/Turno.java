@@ -29,7 +29,6 @@ public class Turno {
         this.sintoma = sintoma;
         this.prioridad = prioridad;
         this.atendido = atendido;
-       // this.timestamp = System.currentTimeMillis();
     }
 
     public Turno(String nombre, String apellido, Enfermedad sintoma, int prioridad, Boolean atendido) {
@@ -39,7 +38,6 @@ public class Turno {
         this.sintoma = sintoma;
         this.prioridad = prioridad;
         this.atendido = atendido;
-        this.timestamp = System.currentTimeMillis();
     }
 
     public int getNumeroTicket() {

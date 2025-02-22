@@ -1,0 +1,25 @@
+Paro cardiorrespiratorio o sospecha de infarto,1
+Shock anafiláctico,1
+Hemorragia masiva incontrolable,1
+Accidente cerebrovascular en evolución,1
+Quemaduras extensas y profundas,1
+Crisis asmática moderada,2
+Alteración súbita del estado de conciencia,2
+Vómitos persistentes con sangre,2
+Fracturas expuestas o desplazadas,2
+Dolor abdominal intenso y súbito,2
+Dolor torácico leve sin signos de infarto,3
+Crisis hipertensiva sin síntomas neurológicos,3
+Vómitos y diarrea severos con signos de deshidratación,3
+Cefalea intensa sin déficits neurológicos,3
+Fiebre alta en niños sin convulsiones,3
+Fiebre moderada sin signos de alarma,4
+Dolor de garganta intenso sin dificultad para respirar,4
+Dolor de oído moderado,4
+Pequeñas heridas sin signos de infección,4
+Síntomas leves de resfriado,4
+Resfriado común sin fiebre,5
+Dolor muscular leve,5
+Picaduras de insectos sin reacción alérgica grave,5
+Ansiedad o crisis emocional sin riesgo inmediato,5
+Molestias gastrointestinales leves (gases, reflujo),5

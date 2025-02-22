@@ -14,10 +14,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,6 +30,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -67,24 +70,29 @@ public class VideoPlayer implements Initializable {
     ListIterator<Video> listVideo;
     Video elementoActual;
 
-    private boolean isPlayed = false;
+    private boolean isPlayed = true;
 
     @FXML
     void btnPlay(MouseEvent event) {
         if (!isPlayed) {
-            btnPlay.setText("Pause");
+            btnPlay.setText("| |");
             mediaPlayer.play();
             isPlayed = true;
         } else {
-            btnPlay.setText("Play");
+            btnPlay.setText("|>");
             mediaPlayer.pause();
             isPlayed = false;
         }
     }
 
+    public void restablecerBotones() {
+        btnPlay.setText("| |");
+        isPlayed = true;
+    }
+
     @FXML
     void btnStop(MouseEvent event) {
-        btnPlay.setText("Play");
+        btnPlay.setText("|>");
         mediaPlayer.stop();
         isPlayed = false;
     }
@@ -94,6 +102,7 @@ public class VideoPlayer implements Initializable {
         btnPrevious.setText("<-");
         mediaPlayer.stop();
         playPreviousVideo();
+        restablecerBotones();
     }
 
     @FXML
@@ -101,6 +110,7 @@ public class VideoPlayer implements Initializable {
         btnNext.setText("->");
         mediaPlayer.stop();
         playNextVideo();
+        restablecerBotones();
     }
 
     @FXML
@@ -140,6 +150,7 @@ public class VideoPlayer implements Initializable {
     }
 
     private void cargarVideos() {
+        
         String basePath = "C:\\Users\\judit\\Videos\\";
         String[][] archivos = {
             {"Seenojolimón.mp4", "Se enojó limón"},
@@ -176,26 +187,13 @@ public class VideoPlayer implements Initializable {
         obtenerDuracion(mediaActual);
         obtenerNombre(video);
 
-        /*Scene scene = mediaView.getScene();
-        if (scene != null) { // Verifica que la escena no sea null
-            mediaView.fitWidthProperty().bind(scene.widthProperty());
-            mediaView.fitHeightProperty().bind(scene.heightProperty());
-        } else {
-            mediaPlayer.setOnReady(() -> { // Esperar a que el video esté listo
-                Scene readyScene = mediaView.getScene();
-                if (readyScene != null) {
-                    mediaView.fitWidthProperty().bind(readyScene.widthProperty());
-                    mediaView.fitHeightProperty().bind(readyScene.heightProperty());
-                }
-            });
-        }*/
         Scene scene = mediaView.getScene();
         mediaView.setPreserveRatio(true); // Mantener la relación de aspecto del video
 
         if (scene != null) {
             mediaView.fitWidthProperty().bind(scene.widthProperty().multiply(0.8));  // Ajustar al 80% del ancho de la ventana
             mediaView.fitHeightProperty().bind(scene.heightProperty().multiply(0.8)); // Ajustar al 80% del alto de la ventana
-            
+
         } else {
             mediaPlayer.setOnReady(() -> {
                 Scene readyScene = mediaView.getScene();
@@ -230,6 +228,15 @@ public class VideoPlayer implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         selectMedia();
+
+        Platform.runLater(() -> {
+            Stage stage = (Stage) mediaView.getScene().getWindow();
+            stage.setOnCloseRequest(event -> {
+                if (mediaPlayer != null) {
+                    mediaPlayer.pause(); // Pausar el video si la ventana se cierra
+                }
+            });
+        });
     }
 
     private static Stage secondaryStage = null; // Almacena la instancia de la ventana
@@ -246,8 +253,20 @@ public class VideoPlayer implements Initializable {
             secondaryStage.setScene(scene);
             secondaryStage.setOnCloseRequest(event -> secondaryStage = null); // Cuando se cierra, restablecer variable
             secondaryStage.show();
+
+            Platform.runLater(() -> {
+                Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                double screenWidth = screenBounds.getWidth();
+
+                // Posicionar en la parte superior derecha
+                secondaryStage.setX(screenWidth - scene.getWidth() - 5); // 10px de margen
+                secondaryStage.setY(0); // 10px de margen desde arriba
+            });
         } else {
-            secondaryStage.toFront(); // Si ya está abierta, la trae al frente
+            if (secondaryStage.isIconified()) { // Si está minimizada
+                secondaryStage.setIconified(false); // Restaurar la ventana
+            }
+            secondaryStage.toFront(); // Traerla al frente
         }
     }
 
@@ -265,8 +284,22 @@ public class VideoPlayer implements Initializable {
             tertiaryStage.setScene(scene);
             tertiaryStage.setOnCloseRequest(event -> tertiaryStage = null); // Cuando se cierra, restablecer variable
             tertiaryStage.show();
+
+            // Usar Platform.runLater para asegurarnos de que la ventana tenga tamaño
+            Platform.runLater(() -> {
+                Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                double screenWidth = screenBounds.getWidth();
+                double screenHeight = screenBounds.getHeight();
+
+                // Posicionar en la parte inferior derecha
+                tertiaryStage.setX(screenWidth - scene.getWidth() - 5); // 10px de margen
+                tertiaryStage.setY(screenHeight - scene.getHeight() - 31); // 10px de margen desde abajo
+            });
         } else {
-            tertiaryStage.toFront(); // Si ya está abierta, la trae al frente
+            if (tertiaryStage.isIconified()) { // Si está minimizada
+                tertiaryStage.setIconified(false); // Restaurar la ventana
+            }
+            tertiaryStage.toFront(); // Traerla al frente
         }
     }
 }

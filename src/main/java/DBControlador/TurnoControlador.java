@@ -81,8 +81,8 @@ public class TurnoControlador {
           PriorityQueue<Turno> turnos = new PriorityQueue<>((Turno t1, Turno t2) -> {
         int prioridadComparacion = Integer.compare(t1.getPrioridad(), t2.getPrioridad());
         if (prioridadComparacion == 0) {
-            return Long.compare(t1.getNumeroTicket(), t2.getNumeroTicket()); // Si prioridad es igual, respeta orden de llegada
-        }
+            return Integer.compare(t1.getNumeroTicket(), t2.getNumeroTicket()); // Si prioridad es igual, respeta orden de llegada
+        }         
         return prioridadComparacion;
     });
          
