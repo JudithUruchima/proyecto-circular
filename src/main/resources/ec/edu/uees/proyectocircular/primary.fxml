@@ -43,7 +43,7 @@
                <children>
                   <Button fx:id="btnPrevious" mnemonicParsing="false" onMouseClicked="#btnPrevious" text="&lt;-" HBox.hgrow="ALWAYS" />
                   <Button fx:id="btnPlay" mnemonicParsing="false" onMouseClicked="#btnPlay" text="| |" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" onMouseClicked="#btnStop" text="Stop" HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onMouseClicked="#btnStop" text="Reset" HBox.hgrow="ALWAYS" />
                   <Button fx:id="btnNext" mnemonicParsing="false" onMouseClicked="#btnNext" text="-&gt;" HBox.hgrow="ALWAYS" />
                   <VBox alignment="CENTER" prefHeight="100.0" prefWidth="288.0">
                      <children>

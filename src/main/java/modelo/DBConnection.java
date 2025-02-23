@@ -11,6 +11,7 @@ import java.sql.*;
  * @author judit
  */
 public class DBConnection {
+
     private Connection connection;
 
     public boolean conectar() {

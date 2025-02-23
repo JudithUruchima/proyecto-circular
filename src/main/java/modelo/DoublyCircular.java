@@ -14,8 +14,8 @@ import java.util.NoSuchElementException;
  */
 public class DoublyCircular<E> implements List<E>, Iterable<E> {
 
-  private Node<E> last; // null por defecto
-   private int current; // 0 por defecto
+    private Node<E> last; // null por defecto
+    private int current; // 0 por defecto
 
     // Inner class
     class Node<E> {
@@ -111,7 +111,9 @@ public class DoublyCircular<E> implements List<E>, Iterable<E> {
     public E get(int index) {
         // Indice es la cantidad de desplazamientos que tengo que hacer con p
         if (this.isEmpty()) // lanzamos una excepcion
+        {
             throw new UnsupportedOperationException("Lista Vacía"); // Ocurre en tiempo de ejecucion
+        }
         if (index >= 0 && index < current) {
             Node<E> p = last.next;
             for (int i = 0; i < index; i++) {
@@ -250,25 +252,25 @@ public class DoublyCircular<E> implements List<E>, Iterable<E> {
         }
         return listaSecundaria;
     }
-    
-    public void playLoop() { //se reprodzca en bucle
-    if (isEmpty()) {
-        System.out.println("Lista vacía.");
-        return;
-    }
-    Node<E> temp = last.next;
-    while (true) { // Bucle infinito
-        System.out.println(temp.data);
-        temp = temp.next; // Avanza al siguiente nodo
 
-        try {
-            Thread.sleep(2000); // Simula una pausa entre videos (2s)
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            break;
+    public void playLoop() { //se reprodzca en bucle
+        if (isEmpty()) {
+            System.out.println("Lista vacía.");
+            return;
+        }
+        Node<E> temp = last.next;
+        while (true) { // Bucle infinito
+            System.out.println(temp.data);
+            temp = temp.next; // Avanza al siguiente nodo
+
+            try {
+                Thread.sleep(2000); // Simula una pausa entre videos (2s)
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
         }
     }
-}
 
     @Override
     public Iterator<E> iterator() {
@@ -296,11 +298,11 @@ public class DoublyCircular<E> implements List<E>, Iterable<E> {
         ListIterator<E> lit = new ListIterator<E>() {
             Node<E> p = last.next;
             boolean first = true;
-            int indice = current-1;
+            int indice = current - 1;
 
             @Override
             public boolean hasNext() {
-                return p!= null;
+                return p != null;
             }
 
             @Override
@@ -331,12 +333,12 @@ public class DoublyCircular<E> implements List<E>, Iterable<E> {
             public int nextIndex() { // la p arranca desde donde el usuario puso su indice con un for, while,etc. //
                 // devuelve el indice siguiente de mi posicion, una variable de control
                 // adicional la i para ver donde esta
-                return indice+1;
+                return indice + 1;
             }
 
             @Override
             public int previousIndex() {
-                return indice-1; 
+                return indice - 1;
             }
 
             @Override
@@ -396,7 +398,7 @@ public class DoublyCircular<E> implements List<E>, Iterable<E> {
                 }
                 if (p == last) {
                     addLast(e);
-                    last = last.next; 
+                    last = last.next;
                     return;
                 } else {
                     Node<E> tmp = new Node<>(e);
@@ -404,7 +406,7 @@ public class DoublyCircular<E> implements List<E>, Iterable<E> {
                     tmp.next = p;
                     p.previous.next = tmp;
                     p.previous = tmp;
-                    
+
                     current++;
                     indice++;
                 }
@@ -446,7 +448,6 @@ public class DoublyCircular<E> implements List<E>, Iterable<E> {
         }
         return p;
     }
-    
 
     public ListIterator<E> listIterator(int index) { // hace next, previous, has next y has previous
 
@@ -586,4 +587,3 @@ public class DoublyCircular<E> implements List<E>, Iterable<E> {
     }
 
 }
-

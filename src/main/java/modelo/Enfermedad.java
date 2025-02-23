@@ -9,8 +9,9 @@ package modelo;
  * @author judit
  */
 public class Enfermedad {
-    private String nombre; 
-    private int prioridad; 
+
+    private String nombre;
+    private int prioridad;
 
     public Enfermedad(String nombre, int prioridad) {
         this.nombre = nombre;
@@ -37,6 +38,5 @@ public class Enfermedad {
     public String toString() {
         return nombre;
     }
-    
-    
+
 }

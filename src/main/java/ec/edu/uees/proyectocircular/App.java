@@ -34,6 +34,7 @@ public class App extends Application {
 
         stage.setMaximized(true);  // Activa pantalla completa al iniciar
         //stage.setFullScreenExitHint("");
+       
         stage.show();
     }
 

@@ -67,82 +67,41 @@ El sistema debe mostrar entretenimiento continuo durante la espera de los pacien
     ArrayList<Enfermedad> enfermedades5 = new ArrayList<>();
 
     public void aniadirEnfermedades() {
-        //Priodidades basadas en el triaje de manchester
-        //Prioridad 1 -> Emergencia
-        /*enfermedades1.add(null);
-        enfermedades1.add(new Enfermedad("Paro cardiorrespiratorio o sospecha de infarto", 1));
-        enfermedades1.add(new Enfermedad("Shock anafiláctico", 1));
-        enfermedades1.add(new Enfermedad("Hemorragia masiva incontrolable", 1));
-        enfermedades1.add(new Enfermedad("Accidente cerebrovascular en evolución", 1));
-        enfermedades1.add(new Enfermedad("Quemaduras extensas y profundas", 1));
-
-        //Prioridad 2 -> Muy urgente 
-        enfermedades2.add(null);
-        enfermedades2.add(new Enfermedad("Crisis asmática moderada", 2));
-        enfermedades2.add(new Enfermedad("Alteración súbita del estado de conciencia", 2));
-        enfermedades2.add(new Enfermedad("Vómitos persistentes con sangre", 2));
-        enfermedades2.add(new Enfermedad("Fracturas expuestas o desplazadas", 2));
-        enfermedades2.add(new Enfermedad("Dolor abdominal intenso y súbito", 2));
-
-        //Prioridad 3 -> Urgente
-        enfermedades3.add(null);
-        enfermedades3.add(new Enfermedad("Dolor torácico leve sin signos de infarto", 3));
-        enfermedades3.add(new Enfermedad("Crisis hipertensiva sin síntomas neurológicos", 3));
-        enfermedades3.add(new Enfermedad("Vómitos y diarrea severos con signos de deshidratación", 3));
-        enfermedades3.add(new Enfermedad("Cefalea intensa sin déficits neurológicos", 3));
-        enfermedades3.add(new Enfermedad("Fiebre alta en niños sin convulsiones", 3));
-
-        //Prioridad 4 -> Poco Urgente
-        enfermedades4.add(null);
-        enfermedades4.add(new Enfermedad("Fiebre moderada sin signos de alarma", 4));
-        enfermedades4.add(new Enfermedad("Dolor de garganta intenso sin dificultad para respirar", 4));
-        enfermedades4.add(new Enfermedad("Dolor de oído moderado", 4));
-        enfermedades4.add(new Enfermedad("Pequeñas heridas sin signos de infección", 4));
-        enfermedades4.add(new Enfermedad("Síntomas leves de resfriado", 4));
-
-        //Prioridad 5 -> No Urgente
-        enfermedades5.add(null);
-        enfermedades5.add(new Enfermedad("Resfriado común sin fiebre", 5));
-        enfermedades5.add(new Enfermedad("Dolor muscular leve", 5));
-        enfermedades5.add(new Enfermedad("Picaduras de insectos sin reacción alérgica grave", 5));
-        enfermedades5.add(new Enfermedad("Ansiedad o crisis emocional sin riesgo inmediato", 5));
-        enfermedades5.add(new Enfermedad("Molestias gastrointestinales leves (gases, reflujo)", 5));
-*/
         String filePath = "C:\\Users\\judit\\Documents\\NetBeansProjects\\proyectoCircular\\src\\main\\java\\ec\\edu\\uees\\proyectocircular\\dolencias.txt";
         //String filePath = getClass().getResource("/ec/edu/uees/proyectocircular/dolencias.txt").getPath();
 
-         //Dolencias nulas para que tenga la oportunidad de cambiar su dolencia en el cbobox
-         enfermedades1.add(null);
-         enfermedades2.add(null);
-         enfermedades3.add(null);
-         enfermedades4.add(null);
-         enfermedades5.add(null);
+        //Dolencias nulas para que tenga la oportunidad de cambiar su dolencia en el cbobox
+        enfermedades1.add(null);
+        enfermedades2.add(null);
+        enfermedades3.add(null);
+        enfermedades4.add(null);
+        enfermedades5.add(null);
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String linea;
             while ((linea = br.readLine()) != null) { // Leer línea por línea
                 String[] partes = linea.split(","); // Separar por coma
-                if (partes.length == 2) { 
+                if (partes.length == 2) {
                     String nombre = partes[0].trim(); // Nombre de la enfermedad
                     int prioridad = Integer.parseInt(partes[1].trim()); // Prioridad
 
                     Enfermedad enfermedad = new Enfermedad(nombre, prioridad);
-                    
+
                     // Agregar la enfermedad a la lista según su prioridad
                     switch (prioridad) {
-                        case 1: 
+                        case 1:
                             enfermedades1.add(enfermedad);
                             break;
-                        case 2: 
+                        case 2:
                             enfermedades2.add(enfermedad);
                             break;
-                        case 3: 
+                        case 3:
                             enfermedades3.add(enfermedad);
                             break;
-                        case 4: 
+                        case 4:
                             enfermedades4.add(enfermedad);
                             break;
-                        case 5: 
+                        case 5:
                             enfermedades5.add(enfermedad);
                             break;
                         default:

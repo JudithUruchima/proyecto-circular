@@ -20,6 +20,7 @@ import java.time.LocalTime;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -78,45 +79,61 @@ public class VideoPlayer implements Initializable {
 
     private boolean isPlayed = true;
 
+    private long lastActionTime = System.currentTimeMillis();
+
+    private enum Navigation {
+        NONE, NEXT, PREVIOUS
+    }
+    private Navigation lastNav = Navigation.NEXT;
+
+// Constantes para los textos de los botones
+    private static final String PLAY_TEXT = "|>";
+    private static final String PAUSE_TEXT = "| |";
+    private static final String NEXT_TEXT = "->";
+    private static final String PREVIOUS_TEXT = "<-";
+
     @FXML
     void btnPlay(MouseEvent event) {
-        if (!isPlayed) {
-            btnPlay.setText("| |");
-            mediaPlayer.play();
-            isPlayed = true;
-        } else {
-            btnPlay.setText("|>");
+        if (isPlayed) {
+            actualizarEstadoReproduccion(false);
             mediaPlayer.pause();
-            isPlayed = false;
+        } else {
+            actualizarEstadoReproduccion(true);
+            mediaPlayer.play();
         }
-    }
-
-    public void restablecerBotones() {
-        btnPlay.setText("| |");
-        isPlayed = true;
     }
 
     @FXML
     void btnStop(MouseEvent event) {
-        btnPlay.setText("|>");
-        mediaPlayer.stop();
-        isPlayed = false;
+        if (isPlayed) {
+            mediaPlayer.stop();
+            mediaPlayer.play();
+            actualizarEstadoReproduccion(true);
+        }
     }
 
     @FXML
     void btnPrevious(MouseEvent event) {
-        btnPrevious.setText("<-");
+        btnPrevious.setText(PREVIOUS_TEXT);
         mediaPlayer.stop();
         playPreviousVideo();
-        restablecerBotones();
+        actualizarEstadoReproduccion(true);
     }
 
     @FXML
     void btnNext(MouseEvent event) {
-        btnNext.setText("->");
+        btnNext.setText(NEXT_TEXT);
         mediaPlayer.stop();
         playNextVideo();
-        restablecerBotones();
+        actualizarEstadoReproduccion(true);
+    }
+
+    /**
+     * Método para actualizar la UI cuando cambia el estado de reproducción.
+     */
+    private void actualizarEstadoReproduccion(boolean enReproduccion) {
+        isPlayed = enReproduccion;
+        btnPlay.setText(enReproduccion ? PAUSE_TEXT : PLAY_TEXT);
     }
 
     @FXML
@@ -125,36 +142,6 @@ public class VideoPlayer implements Initializable {
     }
 
     public void obtenerDuracion(Media player) {
-        /* mediaPlayer.currentTimeProperty().addListener(((observableValue, oldValue, newValue) -> {
-            slider.setValue(newValue.toSeconds());
-            lblDuration.setText("Duración: " + (int) slider.getValue() + " / " + (int) player.getDuration().toSeconds());
-        }));
-        mediaPlayer.setOnReady(() -> {
-            Duration totalDuration = player.getDuration();
-           // slider.setMax(totalDuration.toSeconds());
-            lblDuration.setText("Duración: 0 / " + (int) player.getDuration().toSeconds());
-        });*/
- /*mediaPlayer.currentTimeProperty().addListener((observableValue, oldValue, newValue) -> {
-            double seconds = newValue.toSeconds();
-            slider.setValue(seconds);
-            Duration totalDuration = player.getDuration();
-            if (totalDuration != null && !totalDuration.equals(Duration.UNKNOWN) && totalDuration.toSeconds() > 0) {
-                lblDuration.setText("Duración: " + (int) seconds + " / " + (int) totalDuration.toSeconds());
-            } else {
-                lblDuration.setText("Duración: " + (int) seconds + " / 0");
-            }
-        });
-
-        mediaPlayer.setOnReady(() -> {
-            Duration totalDuration = player.getDuration();
-            if (totalDuration != null && !totalDuration.equals(Duration.UNKNOWN) && totalDuration.toSeconds() > 0) {
-                slider.setMax(totalDuration.toSeconds());
-            } else {
-                System.out.println("Duración no válida: " + totalDuration);
-            }
-            lblDuration.setText("Duración: 0 / " + (int) totalDuration.toSeconds());
-        });
-         */
         mediaPlayer.currentTimeProperty().addListener((observableValue, oldValue, newValue) -> {
             double seconds = newValue.toSeconds();
             slider.setValue(seconds);
@@ -268,55 +255,29 @@ public class VideoPlayer implements Initializable {
         mediaPlayer.play();
     }
 
-    /*private void playNextVideo() {
-         /*if (!listVideo.hasNext()) {
-            listVideo = videoList.listIterator2(); // Reiniciar iterador si es necesario
-        }
-       iniciarReproduccion(listVideo.next());
-        if (elementoActual != null) {
-            elementoActual = listVideo.next(); // En una lista circular, el siguiente después del último es el primero automáticamente
+    private void playNextVideo() {
+        if (!videoList.isEmpty()) {
+            // Si la última acción fue PREVIOUS, avanzar una posición extra para no repetir el video actual
+            if (lastNav == Navigation.PREVIOUS) {
+                listVideo.next();
+            }
+            elementoActual = listVideo.next();
             iniciarReproduccion(elementoActual);
+            lastNav = Navigation.NEXT;
         }
     }
 
     private void playPreviousVideo() {
-        /*if (!listVideo.hasPrevious()) {
-            listVideo = videoList.listIterator2(); // Reiniciar iterador si es necesario
-        
-       // iniciarReproduccion(listVideo.previous());
-        if (elementoActual != null) {
-            // Si no hay elemento anterior, reposiciona el iterador al final de la lista
-            if (!listVideo.hasPrevious()) {
-                listVideo = videoList.listIterator2();
-                // Recorre la lista para situarte en el último elemento
-                while (listVideo.hasNext()) {
-                    listVideo.next();
-                }
+        if (!videoList.isEmpty()) {
+            // Si la última acción fue NEXT, retroceder una posición extra para evitar repetir el video actual
+            if (lastNav == Navigation.NEXT) {
+                listVideo.previous();
             }
             elementoActual = listVideo.previous();
             iniciarReproduccion(elementoActual);
+            lastNav = Navigation.PREVIOUS;
         }
-    }*/
-
-    private void playNextVideo() {
-    if (!videoList.isEmpty()) {
-        // Si se presionó previous justo antes, cancela ese movimiento
-        if (previousPressed) {
-            listVideo.next(); // Avanza una posición adicional
-            previousPressed = false;
-        }
-        elementoActual = listVideo.next();
-        iniciarReproduccion(elementoActual);
     }
-}
-
-private void playPreviousVideo() {
-    if (!videoList.isEmpty()) {
-        elementoActual = listVideo.previous();
-        iniciarReproduccion(elementoActual);
-        previousPressed = true;
-    }
-}
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -346,7 +307,7 @@ private void playPreviousVideo() {
 
     @FXML
     private void switchToSecondary() throws IOException {
-        if (secondaryStage == null) { // Si no está abierta, la creamos
+        /*if (secondaryStage == null) { // Si no está abierta, la creamos
             Parent root = FXMLLoader.load(getClass().getResource("secondary.fxml"));
 
             secondaryStage = new Stage();
@@ -370,6 +331,41 @@ private void playPreviousVideo() {
                 secondaryStage.setIconified(false); // Restaurar la ventana
             }
             secondaryStage.toFront(); // Traerla al frente
+        }*/
+        if (secondaryStage == null) {
+            Task<Parent> task = new Task<>() {
+                @Override
+                protected Parent call() throws Exception {
+                    return FXMLLoader.load(getClass().getResource("secondary.fxml"));
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                Parent root = task.getValue();
+                secondaryStage = new Stage();
+                Scene scene = new Scene(root);
+
+                secondaryStage.setTitle("Solicitar Turnos");
+                secondaryStage.setScene(scene);
+                secondaryStage.setOnCloseRequest(e -> secondaryStage = null);
+                secondaryStage.show();
+
+                Platform.runLater(() -> {
+                    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                    double screenWidth = screenBounds.getWidth();
+                    secondaryStage.setX(screenWidth - scene.getWidth() - 5);
+                    secondaryStage.setY(0);
+                });
+            });
+
+            task.setOnFailed(event -> task.getException().printStackTrace());
+
+            new Thread(task).start();
+        } else {
+            if (secondaryStage.isIconified()) {
+                secondaryStage.setIconified(false);
+            }
+            secondaryStage.toFront();
         }
     }
 
@@ -377,13 +373,15 @@ private void playPreviousVideo() {
 
     @FXML
     private void switchToTertiary() throws IOException {
-        if (tertiaryStage == null) { // Si no está abierta, la creamos
+
+        //Sin hilos -> no tarda pero el video se congela
+        /*if (tertiaryStage == null) { // Si no está abierta, la creamos
             Parent root = FXMLLoader.load(getClass().getResource("tertiary.fxml"));
 
             tertiaryStage = new Stage();
             Scene scene = new Scene(root);
 
-            tertiaryStage.setTitle("Solicitar Turnos");
+            tertiaryStage.setTitle("Atención de Turnos");
             tertiaryStage.setScene(scene);
             tertiaryStage.setOnCloseRequest(event -> tertiaryStage = null); // Cuando se cierra, restablecer variable
             tertiaryStage.show();
@@ -403,6 +401,44 @@ private void playPreviousVideo() {
                 tertiaryStage.setIconified(false); // Restaurar la ventana
             }
             tertiaryStage.toFront(); // Traerla al frente
+        }
+    }*/
+        //Con hilos -> tarda mas
+        if (tertiaryStage == null) {
+            Task<Parent> task = new Task<>() {
+                @Override
+                protected Parent call() throws Exception {
+                    return FXMLLoader.load(getClass().getResource("tertiary.fxml"));
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                Parent root = task.getValue();
+                tertiaryStage = new Stage();
+                Scene scene = new Scene(root);
+
+                tertiaryStage.setTitle("Atención de Turnos");
+                tertiaryStage.setScene(scene);
+                tertiaryStage.setOnCloseRequest(e -> tertiaryStage = null);
+                tertiaryStage.show();
+
+                Platform.runLater(() -> {
+                    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                    double screenWidth = screenBounds.getWidth();
+                    double screenHeight = screenBounds.getHeight();
+                    tertiaryStage.setX(screenWidth - scene.getWidth() - 5);
+                    tertiaryStage.setY(screenHeight - scene.getHeight() - 31);
+                });
+            });
+
+            task.setOnFailed(event -> task.getException().printStackTrace());
+
+            new Thread(task).start();
+        } else {
+            if (tertiaryStage.isIconified()) {
+                tertiaryStage.setIconified(false);
+            }
+            tertiaryStage.toFront();
         }
     }
 }

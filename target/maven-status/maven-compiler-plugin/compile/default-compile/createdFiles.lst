@@ -1,5 +1,6 @@
 ec\edu\uees\proyectocircular\VideoPlayer.class
 ec\edu\uees\proyectocircular\App.class
+ec\edu\uees\proyectocircular\VideoPlayer$2.class
 modelo\DBConnection.class
 modelo\Enfermedad.class
 ec\edu\uees\proyectocircular\SolicitarTurnosVista.class
@@ -12,6 +13,8 @@ module-info.class
 modelo\DoublyCircular$2.class
 ec\edu\uees\proyectocircular\SolicitarTurnosVista$1.class
 ec\edu\uees\proyectocircular\AtencionVista.class
+ec\edu\uees\proyectocircular\VideoPlayer$1.class
 DBControlador\TurnoControlador.class
 modelo\List.class
+ec\edu\uees\proyectocircular\VideoPlayer$Navigation.class
 modelo\DoublyCircular$3.class

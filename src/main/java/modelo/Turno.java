@@ -18,7 +18,7 @@ public class Turno {
     private Enfermedad sintoma;
     private int prioridad;
     private Boolean atendido;
-    private long timestamp; 
+    private long timestamp;
 
     private TurnoControlador coneccion = new TurnoControlador();
 
@@ -83,8 +83,8 @@ public class Turno {
     public void setAtendido(Boolean atendido) {
         this.atendido = atendido;
     }
-    
-     public long getTimestamp() {
+
+    public long getTimestamp() {
         return timestamp;
     }
 
