@@ -10,7 +10,10 @@ import modelo.Video;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,6 +34,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -184,16 +188,17 @@ public class VideoPlayer implements Initializable {
     }
 
     private void cargarVideos() {
-        Path filePath = Paths.get("C:\\Users\\judit\\Documents\\NetBeansProjects\\proyectoCircular\\src\\main\\java\\ec\\edu\\uees\\proyectocircular\\videos.txt");
+        InputStream inputStream = App.class.getResourceAsStream("videos.txt");
 
-        if (!Files.exists(filePath)) {
-            System.out.println("Archivo videos.txt no encontrado en: " + filePath.toAbsolutePath());
+        // Verificar si el archivo existe en los recursos
+        if (inputStream == null) {
+            System.out.println("Archivo videos.txt no encontrado en los recursos.");
             return;
         }
 
-        String basePath = "C:\\Users\\judit\\Videos\\"; // Ruta base de los videos
+        String basePath = "C:\\Users\\judit\\Videos\\"; // Ruta base de los videos, ya que no se van a mandar en si
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath.toFile()))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",", 2); // Separar por la primera coma
@@ -347,6 +352,7 @@ public class VideoPlayer implements Initializable {
 
                 secondaryStage.setTitle("Solicitar Turnos");
                 secondaryStage.setScene(scene);
+                secondaryStage.getIcons().add(new Image(App.class.getResourceAsStream("turno.png")));
                 secondaryStage.setOnCloseRequest(e -> secondaryStage = null);
                 secondaryStage.show();
 
@@ -419,6 +425,7 @@ public class VideoPlayer implements Initializable {
 
                 tertiaryStage.setTitle("Atención de Turnos");
                 tertiaryStage.setScene(scene);
+                tertiaryStage.getIcons().add(new Image(App.class.getResourceAsStream("atencion.png")));
                 tertiaryStage.setOnCloseRequest(e -> tertiaryStage = null);
                 tertiaryStage.show();
 

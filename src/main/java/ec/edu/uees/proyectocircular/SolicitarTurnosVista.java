@@ -8,8 +8,11 @@ import DBControlador.TurnoControlador;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import modelo.Enfermedad;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -67,8 +70,13 @@ El sistema debe mostrar entretenimiento continuo durante la espera de los pacien
     ArrayList<Enfermedad> enfermedades5 = new ArrayList<>();
 
     public void aniadirEnfermedades() {
-        String filePath = "C:\\Users\\judit\\Documents\\NetBeansProjects\\proyectoCircular\\src\\main\\java\\ec\\edu\\uees\\proyectocircular\\dolencias.txt";
-        //String filePath = getClass().getResource("/ec/edu/uees/proyectocircular/dolencias.txt").getPath();
+        InputStream inputStream = getClass().getResourceAsStream("dolencias.txt");
+
+        // Verificar si el archivo existe en los recursos
+        if (inputStream == null) {
+            System.out.println("Archivo dolencias.txt no encontrado en los recursos.");
+            return;
+        }
 
         //Dolencias nulas para que tenga la oportunidad de cambiar su dolencia en el cbobox
         enfermedades1.add(null);
@@ -77,7 +85,7 @@ El sistema debe mostrar entretenimiento continuo durante la espera de los pacien
         enfermedades4.add(null);
         enfermedades5.add(null);
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             String linea;
             while ((linea = br.readLine()) != null) { // Leer línea por línea
                 String[] partes = linea.split(","); // Separar por coma
