@@ -22,4 +22,4 @@ Resfriado común sin fiebre,5
 Dolor muscular leve,5
 Picaduras de insectos sin reacción alérgica grave,5
 Ansiedad o crisis emocional sin riesgo inmediato,5
-Molestias gastrointestinales leves (gases, reflujo),5
+Molestias gastrointestinales leves,5

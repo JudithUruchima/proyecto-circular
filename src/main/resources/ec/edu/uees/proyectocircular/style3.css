@@ -1,0 +1,21 @@
+/* Estilos base del botón */
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-background-radius: 5px;
+}
+
+
+
+/* Inicialmente la imagen es transparente */
+.image-view {
+    -fx-opacity: 0;
+    -fx-transition: opacity 0.5s ease-in-out;
+}
+
+/* Cuando el mouse pasa sobre el botón, la imagen aparece */
+.button:hover .image-view {
+    -fx-opacity: 0.6; /* 60% de opacidad */
+}
+

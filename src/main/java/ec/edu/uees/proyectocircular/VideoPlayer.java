@@ -35,6 +35,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -70,6 +71,8 @@ public class VideoPlayer implements Initializable {
     @FXML
     private MediaView mediaView;
     @FXML
+    private ImageView btnPlayIcon;
+    @FXML
     private Slider slider;
 
     private Media mediaActual;
@@ -83,18 +86,15 @@ public class VideoPlayer implements Initializable {
 
     private boolean isPlayed = true;
 
-    private long lastActionTime = System.currentTimeMillis();
-
     private enum Navigation {
         NONE, NEXT, PREVIOUS
     }
+
     private Navigation lastNav = Navigation.NEXT;
 
 // Constantes para los textos de los botones
-    private static final String PLAY_TEXT = "|>";
-    private static final String PAUSE_TEXT = "| |";
-    private static final String NEXT_TEXT = "->";
-    private static final String PREVIOUS_TEXT = "<-";
+    private final Image playImage = new Image(getClass().getResourceAsStream("right_13928849.png"));
+    private final Image pauseImage = new Image(getClass().getResourceAsStream("pause.png"));
 
     @FXML
     void btnPlay(MouseEvent event) {
@@ -118,7 +118,6 @@ public class VideoPlayer implements Initializable {
 
     @FXML
     void btnPrevious(MouseEvent event) {
-        btnPrevious.setText(PREVIOUS_TEXT);
         mediaPlayer.stop();
         playPreviousVideo();
         actualizarEstadoReproduccion(true);
@@ -126,7 +125,6 @@ public class VideoPlayer implements Initializable {
 
     @FXML
     void btnNext(MouseEvent event) {
-        btnNext.setText(NEXT_TEXT);
         mediaPlayer.stop();
         playNextVideo();
         actualizarEstadoReproduccion(true);
@@ -137,7 +135,8 @@ public class VideoPlayer implements Initializable {
      */
     private void actualizarEstadoReproduccion(boolean enReproduccion) {
         isPlayed = enReproduccion;
-        btnPlay.setText(enReproduccion ? PAUSE_TEXT : PLAY_TEXT);
+        //btnPlay.setText(enReproduccion ? PAUSE_TEXT : PLAY_TEXT);
+        btnPlayIcon.setImage(enReproduccion ? pauseImage : playImage);
     }
 
     @FXML
@@ -341,7 +340,7 @@ public class VideoPlayer implements Initializable {
             Task<Parent> task = new Task<>() {
                 @Override
                 protected Parent call() throws Exception {
-                    return FXMLLoader.load(getClass().getResource("secondary.fxml"));
+                    return FXMLLoader.load(getClass().getResource("secondaryNueva.fxml"));
                 }
             };
 
@@ -414,7 +413,7 @@ public class VideoPlayer implements Initializable {
             Task<Parent> task = new Task<>() {
                 @Override
                 protected Parent call() throws Exception {
-                    return FXMLLoader.load(getClass().getResource("tertiary.fxml"));
+                    return FXMLLoader.load(getClass().getResource("tertiaryNueva.fxml"));
                 }
             };
 

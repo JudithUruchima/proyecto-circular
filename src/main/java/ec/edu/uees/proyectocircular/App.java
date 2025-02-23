@@ -17,6 +17,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.stage.StageStyle;
 
 /**
  * JavaFX App
@@ -27,15 +28,13 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("primary.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("NuevInterfaz.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Sistema de turnos médicos");
       
         stage.setScene(scene);
         stage.getIcons().add(new Image(App.class.getResourceAsStream("icono.png")));
-        stage.setMaximized(true);  // Activa pantalla completa al iniciar
-        //stage.setFullScreenExitHint("");
-       
+        stage.setMaximized(true); // Se abre maximizada pero con la barra de tareas visible
         stage.show();
     }
 

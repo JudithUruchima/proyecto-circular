@@ -90,7 +90,7 @@ public class Turno {
 
     @Override
     public String toString() {
-        return nombre + " " + apellido + ", Síntoma: " + sintoma;
+        return nombre + " " + apellido + ", " + sintoma;
     }
 
 }

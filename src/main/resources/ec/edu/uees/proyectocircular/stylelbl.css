@@ -1,0 +1,30 @@
+.label-rounded {
+    -fx-background-color: #4CAF50; /* Verde */
+    -fx-text-fill: white; /* Texto blanco */
+    -fx-font-size: 16px; /* Tamaño de fuente */
+    -fx-font-weight: bold; /* Negrita */
+    -fx-padding: 10px 15px; /* Espaciado interno */
+    -fx-border-radius: 15px; /* Bordes redondeados */
+    -fx-background-radius: 15px; /* Bordes redondeados */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 2, 2);
+}
+
+/* 🔹 Hover: Sombra más fuerte */
+.label-rounded:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 4, 4);
+}
+.label-gradient {
+    -fx-background-color: linear-gradient(to right, #ff7f50, #ff1493); /* Degradado Coral-Rosa */
+    -fx-text-fill: white; /* Texto blanco */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 15px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(255, 20, 147, 0.4), 10, 0, 4, 4);
+}
+
+/* 🔹 Hover: Aumenta la sombra */
+.label-gradient:hover {
+    -fx-effect: dropshadow(gaussian, rgba(255, 20, 147, 0.6), 15, 0, 6, 6);
+}

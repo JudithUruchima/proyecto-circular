@@ -1,0 +1,60 @@
+/* Inicialmente la imagen es invisible y más pequeña */
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-background-radius: 5px;
+}
+
+
+/* Estilo para los Labels */
+/* Estilo para los Labels */
+.label {
+    -fx-font-size: 14px;  /* Tamaño de letra moderado */
+    -fx-font-weight: bold; /* Texto semi-negrita */
+    -fx-text-fill: #00B0C7;  /* Color azul cian suave */
+    -fx-padding: 4px 10px; /* Espaciado interno */
+    -fx-border-color: transparent; /* Sin borde para una apariencia limpia */
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-alignment: center-left; /* Alineación izquierda */
+    -fx-effect: dropshadow(gaussian, rgba(0, 176, 199, 0.3), 5, 0, 1, 1); /* Sombra ligera */
+}
+
+/* Efecto cuando se pasa el mouse */
+.label:hover {
+    -fx-text-fill: #0095A8;  /* Un tono más oscuro de azul al pasar el mouse */
+    -fx-effect: dropshadow(gaussian, rgba(0, 149, 168, 0.5), 6, 0.2, 1, 1);
+    -fx-cursor: hand;
+}
+
+/* Cuando el mouse pasa sobre la imagen, aparece y crece un poco 
+.image-view:hover {
+    -fx-opacity: 1;
+    -fx-scale-x: 1.5;
+    -fx-scale-y: 1.5;
+}
+*/
+.button:hover .image-view {
+    -fx-opacity: 0.6; /* 60% de opacidad */
+        -fx-scale-x: 1.5;
+    -fx-scale-y: 1.5;
+}
+
+/* Color de fondo de la pista del Slider */
+.slider .track {
+    -fx-background-color: #ccc;
+    -fx-background-radius: 5px;
+}
+
+/* Estilo del "track" recorrido */
+.slider .fill {
+    -fx-background-color: linear-gradient(to right, #00FFC8, #0077FF);
+    -fx-background-radius: 5px;
+}
+
+/* Estilo del botón de arrastre */
+.slider .thumb {
+    -fx-background-color: #00FFC8;
+    -fx-background-radius: 50%;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 2);
+}

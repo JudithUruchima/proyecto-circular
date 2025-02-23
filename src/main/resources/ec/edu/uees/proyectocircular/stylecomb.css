@@ -1,0 +1,235 @@
+
+
+.label {
+    -fx-font-size: 14px;  /* Tamaño de letra */
+    -fx-font-weight: bold; /* Negrita */
+    -fx-text-fill: gray;   /* Color del texto gris oscuro */
+    -fx-padding: 5px 0;    /* Espaciado arriba y abajo */
+}
+
+.text-field {
+    -fx-pref-height: 35px; /* Ajustar altura */
+    -fx-border-radius: 10px; /* Bordes redondeados */
+    -fx-background-radius: 10px; /* Bordes del fondo */
+    -fx-border-color: #00E0FF; /* Borde azul claro */
+    -fx-border-width: 2px; /* Grosor del borde */
+}
+
+
+.button {
+    -fx-background-color: #00FFC8; /* Color de fondo (verde) */
+    -fx-text-fill: white; /* Texto blanco */
+    -fx-font-size: 14px; /* Tamaño de fuente */
+    -fx-font-weight: bold; /* Negrita */
+    -fx-padding: 10px 20px; /* Espaciado interno */
+    -fx-border-radius: 10px; /* Bordes redondeados */
+    -fx-border-color: #14ac94;
+    -fx-background-radius: 10px; /* Bordes redondeados */
+    -fx-cursor: hand; /* Cambiar cursor al pasar el mouse */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 2, 2);
+}
+
+/* 🔹 Agrega sombra más fuerte al pasar el mouse */
+.button:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 4, 4);
+}
+
+
+.button:pressed {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 2, 2);
+    -fx-translate-y: 2px; 
+}
+
+
+
+
+.text-field {
+    -fx-background-color: white; /* Fondo blanco */
+    -fx-text-fill: black; /* Texto negro */
+    -fx-font-size: 14px; /* Tamaño de fuente */
+    -fx-font-weight: bold; /* Texto en negrita */
+    -fx-padding: 8px 12px; /* Espaciado interno */
+    -fx-border-color: #00BFA5; /* Borde verde */
+    -fx-border-width: 2px; /* Grosor del borde */
+    -fx-border-radius: 10px; /* Bordes redondeados */
+    -fx-background-radius: 10px; /* Redondeo del fondo */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 2, 2);
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+/* 🔹 Efecto hover: cambia el color del borde */
+.text-field:hover {
+    -fx-border-color: #45a049; /* Verde más intenso */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 4, 4);
+}
+
+/* 🔹 Efecto al enfocar (cuando el usuario escribe) */
+.text-field:focused {
+    -fx-border-color: #ff5722; /* Cambia a un naranja intenso */
+    -fx-effect: dropshadow(gaussian, rgba(255, 87, 34, 0.5), 10, 0, 6, 6);
+}
+
+/* 🔹 Placeholder (texto dentro cuando está vacío) */
+.text-field:empty {
+    -fx-prompt-text-fill: gray; /* Color del placeholder */
+    -fx-font-style: italic; /* Texto en cursiva */
+}
+
+
+
+
+
+
+
+#myRectangle {
+    -fx-arc-width: 30px;  /* Radio de redondeo horizontal */
+    -fx-arc-height: 30px; /* Radio de redondeo vertical */
+    -fx-fill: #d43131; /* Color del rectángulo */
+    -fx-stroke: transparent;
+}
+#myRectangle1 {
+    -fx-arc-width: 30px;  /* Radio de redondeo horizontal */
+    -fx-arc-height: 30px; /* Radio de redondeo vertical */
+    -fx-fill: #fab24a; /* Color del rectángulo */
+    -fx-stroke: transparent;
+}
+#myRectangle11 {
+    -fx-arc-width: 30px;  /* Radio de redondeo horizontal */
+    -fx-arc-height: 30px; /* Radio de redondeo vertical */
+    -fx-fill: #ecf067; /* Color del rectángulo */
+    -fx-stroke: transparent;
+}
+#myRectangle111 {
+    -fx-arc-width: 30px;  /* Radio de redondeo horizontal */
+    -fx-arc-height: 30px; /* Radio de redondeo vertical */
+    -fx-fill: #1da736; /* Color del rectángulo */
+    -fx-stroke: transparent;
+}
+#myRectangle1111 {
+    -fx-arc-width: 30px;  /* Radio de redondeo horizontal */
+    -fx-arc-height: 30px; /* Radio de redondeo vertical */
+    -fx-fill: #5060c1; /* Color del rectángulo */
+    -fx-stroke: transparent;
+}
+
+.combo-box {
+    -fx-border-radius: 0px; /* Bordes redondeados */
+    -fx-background-radius: 15px; /* Redondear fondo */
+    -fx-text-fill: white;  /* Texto blanco */
+    -fx-font-weight: bold; /* Texto en negrita */
+    -fx-alignment: center; /* Centrar el texto */
+}
+
+.combo-box .cell {
+    -fx-text-fill: #333333;  /* Texto blanco */
+    -fx-font-weight: bold; /* Negrita */
+    -fx-alignment: center; /* Centrar texto */
+}
+
+.combo-box .arrow {
+    -fx-background-color: white; /* Naranja */
+    -fx-background-radius: 0 10px 10px 0; /* Redondea el lado derecho */
+}
+
+/* 🔹 Aplica bordes redondeados a la lista desplegable dentro del ComboBox */
+.combo-box .list-view {
+    -fx-background-radius: 0px 0px 15px 15px; /* Redondear fondo */
+    -fx-border-radius: 15px; /* Bordes redondeados */
+    -fx-background-color: white; /* Color de fondo */
+    -fx-text-fill: black;
+    -fx-alignment: center;
+}
+
+
+
+.combo-box .list-cell:hover {
+    -fx-background-color: lightgray;
+    -fx-text-fill: black;
+}
+
+#cbo1 {
+    -fx-background-color: red;
+    -fx-border-color: transparent;
+ 
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px 15px 0px 0px;
+
+
+    -fx-text-fill: white;
+    -fx-alignment: center;
+
+}
+
+#cbo2 {
+    -fx-background-color: orange;
+    -fx-border-color: transparent;
+ 
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px 15px 0px 0px;
+
+
+    -fx-text-fill: white;
+    -fx-alignment: center;
+
+}
+
+#cbo3 {
+    -fx-background-color: yellow;
+    -fx-border-color: transparent;
+ 
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px 15px 0px 0px;
+
+
+    -fx-text-fill: white;
+    -fx-alignment: center;
+
+}
+
+#cbo4 {
+    -fx-background-color: green;
+    -fx-border-color: transparent;
+ 
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px 15px 0px 0px;
+
+
+    -fx-text-fill: white;
+    -fx-alignment: center;
+
+}
+
+#cbo5 {
+    -fx-background-color: blue;
+    -fx-border-color: transparent;
+ 
+    -fx-border-radius: 15px;
+    -fx-background-radius:  15px 15px 0px 0px;
+
+
+    -fx-text-fill: white;
+    -fx-alignment: center;
+
+}
+
+
+.vbox {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 10px;
+    -fx-border-color: #00B0C7;
+    -fx-border-width: 4px;
+}
+
+.button {
+    -fx-background-color: linear-gradient(to bottom, #00E5D0, #00BFA5); /* Degradado verde-azulado */
+    -fx-text-fill: #FFFFFF; /* Texto blanco */
+    -fx-font-size: 14px; /* Tamaño de fuente */
+    -fx-font-weight: bold; /* Negrita */
+    -fx-padding: 12px 24px; /* Espaciado interno */
+    -fx-border-radius: 12px; /* Bordes redondeados */
+    -fx-border-color: #00897B; /* Borde más oscuro */
+    -fx-background-radius: 12px; /* Bordes redondeados */
+    -fx-cursor: hand; /* Cambiar cursor al pasar el mouse */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 8, 0, 3, 3); /* Sombra */
+    -fx-transition: all 0.3s ease-in-out; /* Transición suave */
+}

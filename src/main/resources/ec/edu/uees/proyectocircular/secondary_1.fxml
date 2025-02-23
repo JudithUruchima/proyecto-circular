@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<Pane prefHeight="343.0" prefWidth="600.0" stylesheets="@stylecomb.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.uees.proyectocircular.SolicitarTurnosVista">
+   <children>
+      <Rectangle fx:id="myRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="42.0" layoutY="27.0" stroke="BLACK" strokeType="INSIDE" width="304.0" />
+      <ComboBox fx:id="cbo1" layoutX="42.0" layoutY="27.0" prefHeight="26.0" prefWidth="304.0" promptText="CRITÍCO" />
+      <Rectangle fx:id="myRectangle1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="42.0" layoutY="88.0" stroke="BLACK" strokeType="INSIDE" width="304.0" />
+      <ComboBox fx:id="cbo2" layoutX="42.0" layoutY="88.0" prefHeight="27.0" prefWidth="304.0" promptText="EMERGENCIA">
+         <padding>
+            <Insets bottom="-6.0" left="-6.0" right="-6.0" top="-6.0" />
+         </padding>
+      </ComboBox>
+      <Rectangle fx:id="myRectangle11" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="42.0" layoutY="149.0" stroke="BLACK" strokeType="INSIDE" width="304.0" />
+      <ComboBox fx:id="cbo3" layoutX="42.0" layoutY="149.0" prefHeight="26.0" prefWidth="304.0" promptText="URGENCIA" />
+      <Rectangle fx:id="myRectangle111" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="42.0" layoutY="210.0" stroke="BLACK" strokeType="INSIDE" width="304.0" />
+      <ComboBox fx:id="cbo4" layoutX="42.0" layoutY="210.0" prefHeight="26.0" prefWidth="304.0" promptText="URGENCIA MENOR" />
+      <Rectangle fx:id="myRectangle1111" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="42.0" layoutY="271.0" stroke="BLACK" strokeType="INSIDE" width="304.0" />
+      <ComboBox fx:id="cbo5" layoutX="42.0" layoutY="271.0" prefHeight="26.0" prefWidth="304.0" promptText="NO URGENTE" />
+      <VBox alignment="CENTER" layoutX="364.0" layoutY="60.0" prefHeight="223.0" prefWidth="203.0" spacing="20.0">
+         <children>
+            <TextField fx:id="txtcodigo" editable="false" prefHeight="26.0" prefWidth="188.0" promptText="Numero de ticket" />
+            <TextField fx:id="txtnombre" prefHeight="26.0" prefWidth="188.0" promptText="Ingrese su nombre" />
+            <TextField fx:id="txtapellido" prefHeight="26.0" prefWidth="188.0" promptText="Ingrese su apellido" />
+            <Button fx:id="btnTurno" mnemonicParsing="false" onAction="#crearEdificio" text="Crear Turno" />
+         </children>
+      </VBox>
+   </children>
+</Pane>

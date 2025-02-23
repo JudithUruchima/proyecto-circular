@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.uees.proyectocircular.VideoPlayer">
+   <bottom>
+      <VBox prefHeight="96.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="49.0" prefWidth="600.0" spacing="10.0" stylesheets="@styleimg.css">
+               <children>
+                  <Button mnemonicParsing="false">
+                     <graphic>
+                        <ImageView fitHeight="29.0" fitWidth="34.0" onMouseClicked="#btnStop" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@left_13928876.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnPlay" mnemonicParsing="false">
+                     <graphic>
+                        <ImageView fx:id="btnPlay" fitHeight="29.0" fitWidth="34.0" onMouseClicked="#btnPlay" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@right_13928849.png" />
+                           </image></ImageView>
+                     </graphic>
+                  </Button>
+                  <Slider fx:id="slider" onMousePressed="#sliderPressed" prefHeight="14.0" prefWidth="447.0" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="62.0" prefWidth="600.0" spacing="40.0" stylesheets="@stylecomb.css">
+               <children>
+                  <Button fx:id="btnAtencion" mnemonicParsing="false" onAction="#switchToTertiary" text="Atencion" />
+                  <Button fx:id="btnTurno" mnemonicParsing="false" onAction="#switchToSecondary" text="Solicitar Turno" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </bottom>
+   <center>
+      <Pane prefHeight="330.0" prefWidth="600.0" stylesheets="@style3.css" BorderPane.alignment="CENTER">
+         <children>
+            <MediaView fitHeight="200.0" fitWidth="200.0" layoutX="200.0" layoutY="65.0" />
+            <Button fx:id="btnPrevious" layoutX="14.0" layoutY="6.0" mnemonicParsing="false" onMouseClicked="#btnPrevious" prefHeight="292.0" prefWidth="287.0">
+               <graphic>
+                  <ImageView fitHeight="73.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@left_13928759.png" />
+                     </image></ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnNext" layoutX="301.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#btnNext" prefHeight="293.0" prefWidth="287.0">
+               <graphic>
+                  <ImageView fitHeight="73.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@right_13928757.png" />
+                     </image></ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>
