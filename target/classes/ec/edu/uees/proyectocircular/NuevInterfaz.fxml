@@ -38,7 +38,7 @@
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="49.0" prefWidth="600.0" spacing="10.0" stylesheets="@styleimg.css">
+            <HBox alignment="CENTER" prefHeight="49.0" spacing="10.0" stylesheets="@styleimg.css">
                <children>
                   <Button fx:id="btnStop" mnemonicParsing="false" onMouseClicked="#btnStop">
                      <graphic>
@@ -58,14 +58,14 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Slider fx:id="slider" onMousePressed="#sliderPressed" prefHeight="14.0" prefWidth="302.0" />
-                  <Label fx:id="lblDuration" prefHeight="38.0" prefWidth="181.0" text="Duración: 00 / 00" />
+                  <Slider fx:id="slider" onMousePressed="#sliderPressed" prefHeight="14.0" prefWidth="360.0" />
+                  <Label fx:id="lblDuration" prefHeight="38.0" text="Duración: 00 / 00" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </HBox>
-            <VBox alignment="CENTER" prefHeight="113.0" prefWidth="545.0" spacing="5.0" stylesheets="@styleimg.css">
+            <VBox alignment="CENTER" spacing="5.0" stylesheets="@styleimg.css" VBox.vgrow="ALWAYS">
                <children>
                   <Label text="Se está reproduciendo:" />
                   <Label fx:id="nombreVideo" text="...." />
@@ -74,7 +74,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
                <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  <Insets bottom="5.0" top="5.0" />
                </padding>
             </VBox>
          </children>
